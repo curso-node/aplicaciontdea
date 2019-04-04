@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "servidor express para el sprint1",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon config.js"
+  },
+  "author": "Edwiinrtz edwiinrtz@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "hbs": "^4.0.3",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curso-node/PrimerSprint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/curso-node/PrimerSprint/issues"
+  },
+  "homepage": "https://github.com/curso-node/PrimerSprint#readme"
+}

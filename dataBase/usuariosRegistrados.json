@@ -1,0 +1,30 @@
+[
+  {
+    "identidad": "123456789",
+    "nombre": "Sebastian",
+    "correo": "sebastian@gmail.com",
+    "contrasena": "sebastian123",
+    "telefono": "123456",
+    "rol": "coordinador"
+  },
+  {
+    "identidad": "1020474107",
+    "nombre": "Andres",
+    "correo": "andres@gmail.com",
+    "contrasena": "andres123",
+    "telefono": "595959",
+    "rol": "aspirante",
+    "cursosRegistrados": [
+      "1"
+    ]
+  },
+  {
+    "identidad": "1020495804",
+    "nombre": "Sebastian",
+    "correo": "sebastianG@gmail.com",
+    "contrasena": "andres42120",
+    "telefono": "595959",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  }
+]

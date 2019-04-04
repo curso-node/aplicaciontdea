@@ -1,0 +1,223 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/************* Menu *******************/
+
+ul li,
+ul li a {
+    text-decoration: none !important;
+}
+
+.navbar ul {
+    width: 35%;
+    text-align: center;
+}
+
+.enlaces{
+    width: 33.33%;
+    font-weight: 700;
+}
+
+.navbar-fixed-top{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+    height: 100px;
+}
+
+.navbar-brand img {
+    width: 30%;
+    height: auto;
+}
+
+#btn_registrarse{
+    background-color:#2f2f2f;
+    border-radius: 25px;
+    color: #ffffff
+}
+
+
+#btn_registrarse a{
+    color: #ffffff
+}
+.enlaces a{
+    color: #2f2f2f;       
+}
+
+.enlacesNav{
+    color: #066732 !important;
+}
+
+.enlacesNav:hover{
+    color: #066732 !important;
+    border: none !important;
+    text-decoration: none !important;
+}
+
+.enlacesNav:active{
+    background-color: #ffffff !important;
+}
+
+.datosUsuario{
+    font-weight: 800;
+    color: #8cb22f !important;
+}
+
+/*************** general paginas *************/
+
+#imgBanner{
+    width: 100%;
+    background-color: blue;
+    position: relative;
+}
+
+#imgBanner img {
+    width: 100%;
+    height: auto;
+}
+
+.titulosSeccion h2{
+    padding: 120px 0 30px 0;
+    font-weight: 800;
+    font-size: 48px;
+}
+
+.containerTop{
+    margin-top: 100px;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+/************* programas ****************/
+
+#cursosAbiertos{
+    margin: 4em 0;
+}
+
+#cursosAbiertos li{
+    list-style: none;
+}
+
+#cursosAbiertos h1{
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+#cursosAbiertos figcaption{
+    padding: 0.5em;
+}
+
+#cursosAbiertos .informacionCurso{
+    box-shadow: 0 5px 5px #b2b2b2;
+    padding: 2em 0 5em 0;
+    position: relative;
+}
+
+.btn-primary{
+    width: 100%;
+    height: 50px;
+    border: none;
+    background: #99cc33;
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-radius: 0;
+    transition: all 0.2s ease-in;
+}
+
+::selection {
+    color: #ffffff;
+    background-color: #99cc33;
+}
+
+.modal-header .close:hover,
+.btn-primary:hover{
+    background-color: #006633;
+}
+
+.btn-cancelar{
+    background-color: #db4437;
+}
+
+.btn-cancelar:hover{
+    background-color: #b2352f;
+}
+
+.modal-header .close{
+    background: #7f7f7f;
+    opacity: 1;
+    width: 61px;
+    height: 50px;
+    line-height: 0;
+    color: #ffffff;
+    transition: all 0.2s ease-in;
+}
+
+.datosdelCurso > p span,
+.modal-body > p span{
+    border-radius: 25px;
+    background-color: #2f2f2f;
+    padding: 0.5em 2em;
+    display: block;
+    width: 60%;
+    margin: auto;
+    color: #ffffff;
+}
+
+.modal-footer{
+    position: relative;
+}
+
+.descripcionCurso{
+    padding: 1em;
+} 
+
+/************* formularios ************/
+
+.colorPaginaFormularios{
+    background-color: #1DB954;
+}
+
+.contFormularios{
+    width: 40%;
+    margin: auto;
+    background: #ffffff;    
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.formularios{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    padding: 2em 0;
+    margin-top: 2em;
+}
+
+.formularios input{
+    text-align: center;
+}
+
+.formulariosIntroduccion{
+    margin-top: 2em;
+}
+
+.formulariosIntroduccion p{
+    width: 90%;
+    display: block;
+    margin: auto;
+}
+
+
+#menuDespegable{
+    background-color: green;
+}
