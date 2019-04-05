@@ -45,7 +45,7 @@ app.post('/registrarse', (req, res) =>{
 app.get('/ingresar', (req, res) =>{
 	res.render('ingresar',{
 		success: req.session.succes, 
-		'datos': req.session.datosPersona,
+		'datos': req.session.datosPersona
 	});
 });
 
@@ -105,16 +105,25 @@ app.get('/dashboard', (req,res) => {
 
 app.post('/dashboard', (req,res) => {	
 	if(req.session.succes){
-    crudsAspirante.inscribirseAunCurso(req.body.idCurso, req.body.identidad);
+		let confirmarRegistro;
+		let cancelarCurso;
+		let datoRegistro;
+		confirmarRegistro = crudsAspirante.inscribirseAunCurso(req.body.idCurso, req.body.identidad);
     
     //Traer los ultimos cambios en la base de datos de los usuarios
     let baseUsuarios = require('./dataBase/usuariosRegistrados');
     let traerDatosUsuario = baseUsuarios.find( datos => {
       return (datos.identidad == req.session.datosPersona.identidad);
-    })
+		})
     
     //Cancelar un curso
-    crudsAspirante.eliminarCurso(req.body.cancelar_idCurso, req.body.cancelar_identidad);
+		cancelarCurso = crudsAspirante.eliminarCurso(req.body.cancelar_idCurso, req.body.cancelar_identidad);
+		
+		if(confirmarRegistro){
+			datoRegistro = confirmarRegistro;
+		} else {
+			datoRegistro = cancelarCurso;
+		}
 
     //Mostrar cursos inscrito
     req.session.datosPersona = traerDatosUsuario;
@@ -123,7 +132,8 @@ app.post('/dashboard', (req,res) => {
     res.render('dashboard', {
       success: req.session.succes, 
       'datos': req.session.datosPersona,
-      'cursosInscrito' : cursosInscrito
+			'cursosInscrito' : cursosInscrito,
+			notificacion: datoRegistro
     });
 	} else{
 		res.redirect('ingresar');

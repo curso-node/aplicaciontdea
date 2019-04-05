@@ -1,22 +1,24 @@
 {{>header}}
 
 <div class="container-fluid containerTop">
-{{#Rol datos.rol value="coordinador"}}
-    <form>
-        <label>Formulario del coordinador</label>
-    </form>
-    {{else}}
-    <section id="cursosAbiertos" class="container-fluid text-center">
-        <h1>Cursos Inscritos</h1>
-        <ul class="row">
+    {{>notificacion}}
 
-         {{#each cursosInscrito}} 
-          {{> cancelarCursos}}
-            {{else}}
-            <p>No estás registrado a ningún curso todavía</p>
-         {{/each}}         
-        </ul>
-        </section>
-{{/Rol}}
+    {{#Rol datos.rol value="coordinador"}}
+        <form>
+            <label>Formulario del coordinador</label>
+        </form>
+        {{else}}
+        <section id="cursosAbiertos" class="container-fluid text-center">
+            <h1>Cursos Inscritos</h1>
+            <ul class="row">
+
+            {{#each cursosInscrito}} 
+            {{> cancelarCursos}}
+                {{else}}
+                <p class="mensajeNoCursos">No estás registrado a ningún curso todavía</p>
+            {{/each}}         
+            </ul>
+            </section>
+    {{/Rol}}
 </div>
 {{>footer}}

@@ -2,6 +2,8 @@ const listadoDeCursos = require('../dataBase/lista-de-cursos');
 const fs= require('fs');
 let listado = require('../dataBase/usuariosRegistrados.json');
 
+let respuesta = undefined;
+
 function mostrarCursoInscritos (reqCurso, reqDatos) {
     reqCurso = [];
     let listadoIdCurso = reqDatos;
@@ -34,6 +36,13 @@ function eliminarCurso (idCurso, IdAspirante) {
             guardar(); 
         }   
     })
+    respuesta = {
+        estado: 'success',
+        mensaje: 'Has cancelado el registro al curso',
+        nombre: 'eliminarCurso',
+    } 
+
+    return respuesta;
 }
 
 function inscribirseAunCurso (datoCurso, idEstudiante) {
@@ -48,13 +57,24 @@ function inscribirseAunCurso (datoCurso, idEstudiante) {
             }); 
             
         if(cursoExiste){
-            console.log('Ya estás registrado');
+            respuesta = {
+                estado: 'danger',
+                mensaje: 'Ya estás registado al curso',
+                nombre: 'registroMalo',
+              }
         } else {
             persona.cursosRegistrados.push(datoCurso);
             guardar(); 
+            respuesta = {
+                estado: 'success',
+                mensaje: 'Te has registado al curso',
+                nombre: 'registroBueno',
+              }              
          }
         }
     })
+
+    return respuesta;
 }
 
 const guardar = () => {
