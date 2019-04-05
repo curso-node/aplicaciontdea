@@ -37,66 +37,20 @@ const guardar =()=>{
 	let texto = JSON.stringify(cursos, null,2)
 	fs.writeFile("./dataBase/lista-de-cursos.json",texto,(err)=> {
 		if(err){throw(err)}	else{console.log('Realizado con exito')}});
-}
-// const regin=(datos)=>{ //registrar usuarios en cursos
-// 	
-// 	
-// 	regg()	
-// 	let data={
-// 		IdUsu:datos.Idusuario,
-// 		Idcur:datos.Idcurso
-// 	};
-// 	let curso = cursos.find(Idcurso => Idcurso.id == data.Idcur);
-// 	let Usu = listaUsu.find(Idusuario => Idusuario.id == data.IdUsu);
-// 	let hg = usuReg.find(vf => vf.usuarios.id ==Usu.id && vf.curso == curso.nombre)
-// 	if(!hg){
-// 		let br ={
-// 			curso:{
-// 				nombre:curso.nombre,
-// 				id:curso.id
-// 			},
-// 			usuarios:{
-// 				nombre: Usu.nombre,
-// 				id: Usu.id
-// 			}
-// 		}
-// 		usuReg.push(br)
-// 		guardarReg()
-		
-// 	}else{
-// 		console.log("ya hay un usuario con ese ID registrado en:"+curso.nombre)
-// 	}
-// }
-// const regg=()=>{ //llevar a usuReg los inscritos y sus cursos correspondientes
-// 	usuReg = require('./dataBase/registrados')
-// }
-// const guardarReg =()=>{ //crear el archivo de registrados
-// 	let texto = JSON.stringify(usuReg)
-// 	fs.writeFile("./dataBase/registrados.json",texto,(err)=> {
-// 		if(err){throw(err)}	else{console.log('Realizado con exito')}});
-// }
-		
+}	
 const verInscritos=(curso)=>{
 	let IDpersonasRegistradas = cursos.find(cur => cur.id == curso).personasRegistradas
-	infoPersonasRegistradas = []
+	infoPersonasRegistradas =[]
 	for (var i = 0; i < IDpersonasRegistradas.length; i++) {
 		infoPersonasRegistradas.push(listaUsu.find(xx=>xx.identidad == IDpersonasRegistradas[i]))
 	}
-	lista={
-		lis:infoPersonasRegistradas,
-		lon:IDpersonasRegistradas.length
+	informacion={
+		lista: infoPersonasRegistradas,
+		total:IDpersonasRegistradas.length,
+		Idcurso:curso
 	}
-	nombre = 'EDWINPALACIOSORTIZ'
-	return infoPersonasRegistradas
 }
-const cursosOP=(opcion,lcurso)=>{
-	
-	
-	regg()
-	switch (opcion){
-		
-		case "cerrar": //cerrar
-		console.log(lcurso)
+const cerrar=(lcurso)=>{
 		let ab = cursos.find(ab => ab.id==lcurso)
 		if (!ab) {
 			console.log('Ese curso no existe')
@@ -104,8 +58,6 @@ const cursosOP=(opcion,lcurso)=>{
 			ab['estado']="cerrado"
 			guardar()
 		}
-		break
-	}
 }
 const actualizar=(datos)=>{
 	
@@ -142,14 +94,7 @@ const eliminar=(usu,cur)=>{
 		guardarReg()
 	}
 }
-const miscursos=(Mcur)=>{
-	regg()
-	let Mcursos = usuReg.filter(mc => mc.usuarios.id == Mcur)
-	for (var i = 0; i < Mcursos.length; i++) {
-		console.log(Mcursos[i].curso)
-	}
-}
-const infoUsuCur=(ID,cur)=>{
+const infoUsu=(ID,cur)=>{
 	
 	console.log(ID)
 	let infoUsuario = listaUsu.find(iu => iu.identidad == ID)
@@ -164,11 +109,10 @@ const infoUsuCur=(ID,cur)=>{
 }
 module.exports={
 	crearCurso,
-	cursosOP,
 	actualizar,
 	eliminar,
-	miscursos,
-	infoUsuCur,
-	verInscritos
+	infoUsu,
+	verInscritos,
+	cerrar
 
 }

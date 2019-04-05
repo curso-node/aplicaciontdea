@@ -21,7 +21,7 @@
     "descripcion": "no hacemos nada",
     "personasRegistradas": [
       "1020474107",
-      "1000399852"
+      "102020202"
     ]
   },
   {
@@ -29,11 +29,11 @@
     "nombre": "Nuevo curso",
     "duracion": "asd",
     "costo": "123",
-    "estado": "disponible",
+    "estado": "cerrado",
     "modalidad": "presencial",
     "descripcion": "asdasasd",
     "personasRegistradas": [
-      "1020474107"
+      "102020202"
     ]
   },
   {
@@ -45,6 +45,17 @@
     "modalidad": "presencial",
     "descripcion": "asdasasdaasddasd",
     "categoria": "cultura",
+    "personasRegistradas": []
+  },
+  {
+    "id": 5,
+    "nombre": "Curso Madrugada",
+    "duracion": "8 horas",
+    "costo": "0",
+    "estado": "disponible",
+    "modalidad": "presencial",
+    "descripcion": "nada",
+    "categoria": "programacion",
     "personasRegistradas": []
   }
 ]

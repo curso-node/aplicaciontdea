@@ -158,14 +158,28 @@ app.get('/dashboard/Cursos', (req, res ) => {
 	}
 })
 app.post('/dashboard/inscritos',(req,res)=>{
-	crudCoordinador.verInscritos(req.body.idCur);
+crudCoordinador.verInscritos(req.body.idCur);
+if(req.session.succes){
 	res.render('inscritos',{
 		success: req.session.succes, 
 		'datos': req.session.datosPersona,
-		'lista': infoPersonasRegistradas
+		'inscritos': informacion.lista,
+		'totalInscritos': informacion.total,
+		'curso':informacion.Idcurso
 	})
-})
+} else{
+	res.redirect("../ingresar")
 
+}
+})
+app.post('/dashboard/cerrar',(req,res)=>{
+	crudCoordinador.cerrar(req.body.ID)
+	if (req.session.succes) {
+		res.redirect("Cursos")
+	}else{
+		res.redirect("../ingresar")
+	}
+})
 
 app.get('/', (req, res) => {
 	res.render('index', {

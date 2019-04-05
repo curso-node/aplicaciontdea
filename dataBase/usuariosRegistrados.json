@@ -26,7 +26,10 @@
     "contrasena": "42120",
     "telefono": "58588",
     "rol": "aspirante",
-    "cursosRegistrados": []
+    "cursosRegistrados": [
+      "2",
+      "3"
+    ]
   },
   {
     "identidad": "10205854741",

@@ -1,10 +1,4 @@
-{{>header}}
-
-
-{{edwin}}
-
-
-
+{{>header}}<br><br><br><br>
 <table class="table table-bordered">
 	<thead>
     <tr>
@@ -12,33 +6,49 @@
       <th scope="col">Identidad</th>
       <th scope="col"></th>
     </tr>
-  </thead>
-{{#each lista}}
+</thead>
+{{#each inscritos}}
 <tbody>
     <tr>
       <td>{{this.nombre}}</td>
-      <td>{{this.id}}</td>
+      <td>{{this.identidad}}</td>
       <td>
-        <form action="/infoUsuarioCurso" method="post">
-        	<input type="hidden" name="iden" value="{{this.id}}">
-        	<input type="hidden" name="cur" value="{{this..id}}">
-        	<input type="submit" name="info" class="btn btn-success" value="Info">
-        </form>
+      	<button type="button" class="btn btn-success" data-toggle="modal" data-target='#{{this.identidad}}'>Mas información</button>
       </td>
+    	<div class="modal fade" id='{{this.identidad}}' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			        <div class="modal-header">
+			          <h5 class="modal-title" id="exampleModalLabel"><b>{{this.nombre}}</b></h5>
+			          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			          </button>
+			        </div>
+			        <div class="modal-body">
+			          <b><p>Identidad: <span>{{this.identidad}}</span></p></b>
+			          <b><p>Correo: <span>{{this.correo}}</span></p></b>
+			          <b><p>Telefono : <span>{{this.telefono}}</span></p></b>
+			          <b><p>Rol : <span>{{this.rol}}</span></p></b>
+			        </div>
+			    	<div class="modal-footer">
+			    		<form action="/dashboard/eliminar" method="post">
+			    			<input type="hidden" name="eliminarPer" value="{{this.identidad}}">
+			    			<input type="hidden" name="eliminarCur" value="{{curso}}">
+			    			<input type="submit" name="" value="Eliminar del curso" class="btn btn-danger">
+			    		</form>
+					</div>                          
+		    	</div>
+			</div>
+		</div>
     </tr>
 </tbody>
 {{/each}}
-
-
 <tr>
-	<th colspan="2">Total inscritos:</th>
+	<th colspan="2">Total inscritos:	{{totalInscritos}}</th>
 	<td>
-      	<form action="/dashboard/cerrarCurso" method="post">
-           <input type="hidden" name="ID" value="{{Idcurso}}">
-           <input type="submit" class="btn btn-danger" value="Cerrar curso" ></input>
+      	<form action="/dashboard/cerrar" method="post">
+           <input type="hidden" name="ID" value="{{curso}}">
+           <input type="submit" class="btn btn-danger" value="Cerrar disponibilidad" ></input>
       	</form>
      </td>
-</tr>
-
-</table>
 {{>footer}}
