@@ -10,6 +10,8 @@ const listadoDeCursos = require('./dataBase/lista-de-cursos');
 const fs= require('fs');
 require('./helpers');
 const crudsAspirante = require('./cruds/aspirantes');
+const crudCoordinador = require('./cruds/coordinador')
+const listadoDeUsuarios = require('./dataBase/usuariosRegistrados')
 
 const directorioPublico = path.join(__dirname, '/public');
 app.use(express.static(directorioPublico));
@@ -137,6 +139,105 @@ app.post('/dashboard', (req,res) => {
     });
 	} else{
 		res.redirect('ingresar');
+	}
+})
+app.get('/dashboard/crear',(req,res)=>{
+	res.render('crearCursos', {
+		success: req.session.succes, 
+		'datos': req.session.datosPersona
+	});
+});
+app.post('/crearCurso',(req,res)=>{
+	let datoRegistros = crudCoordinador.crearCurso(req.body);
+	console.log(datoRegistros);
+	res.render('crearCursos', {
+		success: req.session.succes, 
+		'datos': req.session.datosPersona
+	});
+
+});
+
+
+app.get('/dashboard/Cursos', (req, res ) => {
+	if(req.session.succes){
+		res.render('Cursos',{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona,
+			'listadoCursos': listadoDeCursos
+		})
+	} else{
+		res.redirect("../ingresar");
+	}
+})
+
+app.post('/dashboard/inscritos',(req,res)=>{
+crudCoordinador.verInscritos(req.body.idCur);
+if(req.session.succes){
+	res.render('inscritos',{
+		success: req.session.succes, 
+		'datos': req.session.datosPersona,
+		'inscritos': informacion.lista,
+		'totalInscritos': informacion.total,
+		'cursoID': informacion.Idcurso
+	})
+} else{
+	res.redirect("../ingresar")
+
+}
+})
+app.post('/dashboard/cerrar',(req,res)=>{
+	crudCoordinador.cerrar(req.body.ID)
+	if (req.session.succes) {
+		res.redirect("Cursos",{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona	
+		})
+	}else{
+		res.redirect("../ingresar")
+	}
+})
+app.post("/dashboard/eliminar",(req,res)=>{
+	if(req.session.sucess){
+		crudCoordinador.eliminar(req.body.idPer,req.body.idCur)
+		res.render("/dashboard",{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona	
+		})
+	}else{
+		res.redirect('../ingresar')
+	}
+
+})
+app.get('/dashboard/usuarios',(req,res)=>{
+	if (req.session.succes) {
+		res.render('verUsuarios',{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona,
+			'lista':listadoDeUsuarios
+		})
+	}else{
+		res.redirect('../ingresar')
+	}		
+
+})
+app.post("/dashboard/actualizar",(req,res)=>{
+	if(req.session.succes){
+		crudCoordinador.infoUsu(req.body.id)
+		res.render("actualizar",{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona,
+			'informacion':informacion
+		})
+	}else{
+		res.redirect("../ingresar")
+	}
+})
+app.post("/actualizar",(req,res)=>{
+	crudCoordinador.actualizar(req.body)
+	if (req.session.succes) {
+		res.redirect("/dashboard");
+	}else{
+		res.redirect("../ingresar")
 	}
 })
 
