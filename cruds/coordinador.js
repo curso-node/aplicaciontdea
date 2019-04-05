@@ -40,15 +40,17 @@ const guardar =()=>{
 }	
 const verInscritos=(curso)=>{
 	let IDpersonasRegistradas = cursos.find(cur => cur.id == curso).personasRegistradas
-	infoPersonasRegistradas =[]
+	infoPersonasRegistradas=[]
 	for (var i = 0; i < IDpersonasRegistradas.length; i++) {
-		infoPersonasRegistradas.push(listaUsu.find(xx=>xx.identidad == IDpersonasRegistradas[i]))
+		info = listaUsu.find(xx=>xx.identidad == IDpersonasRegistradas[i])
+		info.cursoActual = curso
+		infoPersonasRegistradas.push(info)
 	}
 	informacion={
 		lista: infoPersonasRegistradas,
-		total:IDpersonasRegistradas.length,
-		Idcurso:curso
+		total: IDpersonasRegistradas.length
 	}
+	console.log(informacion.lista)
 }
 const cerrar=(lcurso)=>{
 		let ab = cursos.find(ab => ab.id==lcurso)
@@ -60,7 +62,7 @@ const cerrar=(lcurso)=>{
 		}
 }
 const actualizar=(datos)=>{
-	
+	console.log(datos.id)
 	let usua = listaUsu.find(wh => wh.identidad == datos.id)
 	if (!usua) {
 		console.log("El usuario no existe")
@@ -75,36 +77,46 @@ const actualizar=(datos)=>{
 	}
 }
 const guardarUsu=()=>{
-	let txt = JSON.stringify(listaUsu)
+	let txt = JSON.stringify(listaUsu,null,2)
 	fs.writeFile("./dataBase/usuariosRegistrados.json",txt,(err)=> {
 		if(err){throw(err)}	else{console.log('Realizado con exito')}})
 }
+
 const eliminar=(usu,cur)=>{
-	
-	
-	regg()
-	let dataUs = listaUsu.find(xf => xf.identidad == usu )
-	let dataCur = cursos.find(xfc => xfc.id == cur)
-	if (!dataUs || !dataCur) {
+	let dataUs = listaUsu.find(xf => xf.identidad == usu ).cursosRegistrados
+	let dataCur = cursos.find(xfc => xfc.id == cur).personasRegistradas
+	if (!dataUs ) {
 		console.log("Uno de los datos es invalido. ¡verifique!")
 	}else{
-		let nEliminar = usuReg.filter(xx=> xx.curso.id != cur ||  xx.usuarios.id != usu) //no sé por qué funciona con || y no con && pero así funciona
-		console.log(nEliminar)
-		usuReg = nEliminar
-		guardarReg()
+		console.log("personas:"+dataCur)
+		console.log("cursos:"+dataUs)
+		let personasNoEliminadas= []
+		for (var i = 0; i < dataCur.length; i++) {
+			if(dataCur[i]!=usu){
+				personasNoEliminadas.push(dataCur[i])
+				
+			}
+		}
+		cursos.find(c => c.id == cur).personasRegistradas = personasNoEliminadas
+		guardar()
+		cursosNoEliminados = []
+		for (var i = 0; i < dataUs.length; i++) {
+			if(dataUs[i]!=cur){
+				cursosNoEliminados.push(dataUs[i])
+			}
+		}
+		listaUsu.find(u => u.identidad == usu).cursosRegistrados = cursosNoEliminados
+		guardarUsu()
 	}
 }
-const infoUsu=(ID,cur)=>{
-	
-	console.log(ID)
+const infoUsu=(ID)=>{
 	let infoUsuario = listaUsu.find(iu => iu.identidad == ID)
 	informacion={
 		nombre:infoUsuario.nombre,
 		identidad:infoUsuario.identidad,
 		correo:infoUsuario.correo,
 		telefono:infoUsuario.telefono,
-		rol:infoUsuario.rol,
-		curso:cur
+		rol:infoUsuario.rol
 	}
 }
 module.exports={

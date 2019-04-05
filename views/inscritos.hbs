@@ -7,7 +7,7 @@
       <th scope="col"></th>
     </tr>
 </thead>
-{{#each inscritos}}
+{{#each inscritos }}
 <tbody>
     <tr>
       <td>{{this.nombre}}</td>
@@ -32,8 +32,8 @@
 			        </div>
 			    	<div class="modal-footer">
 			    		<form action="/dashboard/eliminar" method="post">
-			    			<input type="hidden" name="eliminarPer" value="{{this.identidad}}">
-			    			<input type="hidden" name="eliminarCur" value="{{curso}}">
+			    			<input type="hidden" name="idPer" value="{{this.identidad}}">
+			    			<input type="hidden" name="idCur" value="{{this.cursoActual}}">
 			    			<input type="submit" name="" value="Eliminar del curso" class="btn btn-danger">
 			    		</form>
 					</div>                          
@@ -44,7 +44,7 @@
 </tbody>
 {{/each}}
 <tr>
-	<th colspan="2">Total inscritos:	{{totalInscritos}}</th>
+	<th colspan="2">Total inscritos:	{{totalInscritos}} </th>
 	<td>
       	<form action="/dashboard/cerrar" method="post">
            <input type="hidden" name="ID" value="{{curso}}">

@@ -11,6 +11,7 @@ const fs= require('fs');
 require('./helpers');
 const crudsAspirante = require('./cruds/aspirantes');
 const crudCoordinador = require('./cruds/coordinador')
+const listadoDeUsuarios = require('./dataBase/usuariosRegistrados')
 
 const directorioPublico = path.join(__dirname, '/public');
 app.use(express.static(directorioPublico));
@@ -147,7 +148,6 @@ app.post('/crearCurso',(req,res)=>{
 });
 app.get('/dashboard/Cursos', (req, res ) => {
 	if(req.session.succes){
-		let listadoDeCursos = require('./dataBase/lista-de-cursos.json');
 		res.render('Cursos',{
 			success: req.session.succes, 
 			'datos': req.session.datosPersona,
@@ -165,7 +165,7 @@ if(req.session.succes){
 		'datos': req.session.datosPersona,
 		'inscritos': informacion.lista,
 		'totalInscritos': informacion.total,
-		'curso':informacion.Idcurso
+		'cursoID': informacion.Idcurso
 	})
 } else{
 	res.redirect("../ingresar")
@@ -175,7 +175,57 @@ if(req.session.succes){
 app.post('/dashboard/cerrar',(req,res)=>{
 	crudCoordinador.cerrar(req.body.ID)
 	if (req.session.succes) {
-		res.redirect("Cursos")
+		res.redirect("Cursos",{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona	
+		})
+	}else{
+		res.redirect("../ingresar")
+	}
+})
+app.post("/dashboard/eliminar",(req,res)=>{
+	if(req.session.sucess){
+		crudCoordinador.eliminar(req.body.idPer,req.body.idCur)
+		res.render("/dashboard",{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona	
+		})
+	}else{
+		res.redirect('../ingresar')
+	}
+
+})
+app.get('/dashboard/usuarios',(req,res)=>{
+	if (req.session.succes) {
+		res.render('verUsuarios',{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona,
+			'lista':listadoDeUsuarios
+		})
+	}else{
+		res.redirect('../ingresar')
+	}		
+
+})
+app.post("/dashboard/actualizar",(req,res)=>{
+	if(req.session.succes){
+		crudCoordinador.infoUsu(req.body.id)
+		res.render("actualizar",{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona,
+			'informacion':informacion
+		})
+	}else{
+		res.redirect("../ingresar")
+	}
+})
+app.post("/actualizar",(req,res)=>{
+	crudCoordinador.actualizar(req.body)
+	if (req.session.succes) {
+		res.redirect("/dashboard",{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona	
+		})
 	}else{
 		res.redirect("../ingresar")
 	}
