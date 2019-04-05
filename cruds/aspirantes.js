@@ -38,6 +38,7 @@ function eliminarCurso (idCurso, IdAspirante) {
 
 function inscribirseAunCurso (datoCurso, idEstudiante) {
     let cursoExiste = false;
+
     listado.find( (persona) => {
         if(persona.identidad === idEstudiante){
             persona.cursosRegistrados.find( (value) => {
@@ -49,20 +50,29 @@ function inscribirseAunCurso (datoCurso, idEstudiante) {
             
         if(cursoExiste){
             console.log('Ya estás registrado');
-        } else {
+        } else {          
             persona.cursosRegistrados.push(datoCurso);
+            let curso = listadoDeCursos.find(registrado => registrado.id == datoCurso)
+            curso.personasRegistradas.push(idEstudiante)
             guardar(); 
+            registrarEnCurso();            
          }
         }
-    })
+    })   
 }
 
 const guardar = () => {
     let datos = JSON.stringify(listado, null, 2);
 
-    fs.writeFile('./database/usuariosRegistrados.json', datos, (err) =>{
+    fs.writeFile('./dataBase/usuariosRegistrados.json', datos, (err) =>{
         if(err) throw err;
         console.log('Datos almacenados correctamente');
+    })
+}
+const registrarEnCurso=()=>{
+    let datosCur = JSON.stringify(listadoDeCursos, null, 2);
+    fs.writeFile('./dataBase/lista-de-cursos.json',datosCur,(err)=>{
+        if (err)throw err;
     })
 }
 

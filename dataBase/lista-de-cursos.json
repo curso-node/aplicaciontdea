@@ -1,1 +1,39 @@
-[{"id": 1, "nombre":"curso 2","duracion":"40 horas","costo":"350.000","estado":"disponible","modalidad":"virtual","descripcion":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur venenatis fermentum lacus, nec pellentesque ipsum rutrum vel. Duis vitae elit commodo, vulputate velit ut, congue mi. Nam scelerisque ut nunc sed aliquam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse cursus ultrices nisi,", "categoria": "teatro", "personasRegistradas" : []}, {"id": 2, "nombre":"curso 1","duracion":"40 horas","costo":"350.000","estado":"disponible","modalidad":"virtual","descripcion":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur venenatis fermentum lacus, nec pellentesque ipsum rutrum vel. Duis vitae elit commodo, vulputate velit ut, congue mi. Nam scelerisque ut nunc sed aliquam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse cursus ultrices nisi,", "categoria": "teatro", "personasRegistradas" : []}, {"id": 3, "nombre":"curso 3","duracion":"40 horas","costo":"350.000","estado":"disponible","modalidad":"virtual","descripcion":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur venenatis fermentum lacus, nec pellentesque ipsum rutrum vel. Duis vitae elit commodo, vulputate velit ut, congue mi. Nam scelerisque ut nunc sed aliquam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse cursus ultrices nisi,", "categoria": "teatro", "personasRegistradas" : []}]
+[
+  {
+    "id": 1,
+    "nombre": "Curso 2",
+    "duracion": "5 semanas",
+    "costo": "200000",
+    "estado": "disponible",
+    "modalidad": "presencial",
+    "descripcion": "aosdñhbasjkdhasdhjas",
+    "personasRegistradas": [
+      "1020474107"
+    ]
+  },
+  {
+    "id": 2,
+    "nombre": "Curso 3",
+    "duracion": "2 horas",
+    "costo": "100.000",
+    "estado": "disponible",
+    "modalidad": "virtual",
+    "descripcion": "no hacemos nada",
+    "personasRegistradas": [
+      "1020474107",
+      "1000399852"
+    ]
+  },
+  {
+    "id": 3,
+    "nombre": "Nuevo curso",
+    "duracion": "asd",
+    "costo": "123",
+    "estado": "disponible",
+    "modalidad": "presencial",
+    "descripcion": "asdasasd",
+    "personasRegistradas": [
+      "1020474107"
+    ]
+  }
+]

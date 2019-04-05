@@ -1,0 +1,44 @@
+{{>header}}
+
+
+{{edwin}}
+
+
+
+<table class="table table-bordered">
+	<thead>
+    <tr>
+      <th scope="col">Usuario</th>
+      <th scope="col">Identidad</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+{{#each lista}}
+<tbody>
+    <tr>
+      <td>{{this.nombre}}</td>
+      <td>{{this.id}}</td>
+      <td>
+        <form action="/infoUsuarioCurso" method="post">
+        	<input type="hidden" name="iden" value="{{this.id}}">
+        	<input type="hidden" name="cur" value="{{this..id}}">
+        	<input type="submit" name="info" class="btn btn-success" value="Info">
+        </form>
+      </td>
+    </tr>
+</tbody>
+{{/each}}
+
+
+<tr>
+	<th colspan="2">Total inscritos:</th>
+	<td>
+      	<form action="/dashboard/cerrarCurso" method="post">
+           <input type="hidden" name="ID" value="{{Idcurso}}">
+           <input type="submit" class="btn btn-danger" value="Cerrar curso" ></input>
+      	</form>
+     </td>
+</tr>
+
+</table>
+{{>footer}}

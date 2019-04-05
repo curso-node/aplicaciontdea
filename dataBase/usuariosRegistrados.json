@@ -15,6 +15,8 @@
     "telefono": "595959",
     "rol": "aspirante",
     "cursosRegistrados": [
+      "3",
+      "2",
       "1"
     ]
   },
@@ -26,5 +28,16 @@
     "telefono": "595959",
     "rol": "aspirante",
     "cursosRegistrados": []
+  },
+  {
+    "identidad": "1000399852",
+    "nombre": "Edwin",
+    "correo": "edwin@gmail.com",
+    "contrasena": "edwin123",
+    "telefono": "3158331891",
+    "rol": "aspirante",
+    "cursosRegistrados": [
+      "2"
+    ]
   }
 ]
