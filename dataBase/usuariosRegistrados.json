@@ -15,7 +15,8 @@
     "telefono": "595959",
     "rol": "aspirante",
     "cursosRegistrados": [
-      "1"
+      "1",
+      "2"
     ]
   },
   {
@@ -23,6 +24,141 @@
     "nombre": "Sebastian",
     "correo": "sebastianG@gmail.com",
     "contrasena": "andres42120",
+    "telefono": "595959",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "123456",
+    "nombre": "Sebastian",
+    "correo": "sebastian@gmail.com",
+    "contrasena": "andres123",
+    "telefono": "123",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "102020202",
+    "nombre": "Deisy",
+    "correo": "deisy@gmail.com",
+    "contrasena": "42120",
+    "telefono": "58588",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "102049580498",
+    "nombre": "Mario",
+    "correo": "mario@gmail.com",
+    "contrasena": "sebastian123",
+    "telefono": "595959",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "10205854741",
+    "nombre": "Carlos",
+    "correo": "carlos@gmail.com",
+    "contrasena": "carlos123",
+    "telefono": "5969797",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "1020585474898",
+    "nombre": "Carlos",
+    "correo": "carlos@gmail.com",
+    "contrasena": "carlos123",
+    "telefono": "5969797",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "147852963",
+    "nombre": "Marta",
+    "correo": "marta@gmail.com",
+    "contrasena": "14",
+    "telefono": "96987",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "1478963225",
+    "nombre": "Juan",
+    "correo": "juan@gmail.com",
+    "contrasena": "juan123",
+    "telefono": "14785236",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "1478522147",
+    "nombre": "Maria",
+    "correo": "maria@gmail.com",
+    "contrasena": "5969797",
+    "telefono": "598752",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "585858528828",
+    "nombre": "Ramiro",
+    "correo": "ramiro@gamil.om",
+    "contrasena": "4885",
+    "telefono": "252525",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "165148625256",
+    "nombre": "manu",
+    "correo": "manus@gmail.com",
+    "contrasena": "1414",
+    "telefono": "1516",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "48215252582852",
+    "nombre": "Carlos",
+    "correo": "sernmandres@gmail.com",
+    "contrasena": "andres42120",
+    "telefono": "252525",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "25895228",
+    "nombre": "Manuela",
+    "correo": "sebastian@gmail.com",
+    "contrasena": "sebastian123",
+    "telefono": "525",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "252852841248152",
+    "nombre": "Manuela",
+    "correo": "sebastianG@gmail.com",
+    "contrasena": "sebastian123",
+    "telefono": "2582",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "1418452852",
+    "nombre": "Carlos",
+    "correo": "andres@gmail.com",
+    "contrasena": "sebastian123",
+    "telefono": "2281282",
+    "rol": "aspirante",
+    "cursosRegistrados": []
+  },
+  {
+    "identidad": "1020",
+    "nombre": "Carlos",
+    "correo": "sebastian@gmail.com",
+    "contrasena": "123",
     "telefono": "595959",
     "rol": "aspirante",
     "cursosRegistrados": []

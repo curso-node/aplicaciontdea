@@ -2,6 +2,7 @@ const fs= require('fs');
 
 //Listado para alcenar registros
 let listado = [];
+let respuesta;
 
 function crearRegistro (datosEstudiante) {
     let usuarioExiste = false;
@@ -24,11 +25,21 @@ function crearRegistro (datosEstudiante) {
         }
     });
 
-    if(usuarioExiste){
-        console.log('usuario ya existe');
+    if(usuarioExiste){      
+      respuesta = {
+        estado: 'danger',
+        mensaje: 'El usuario ya está registrado.'
+      }
+      return respuesta;
+
     } else{
         listado.push(datos);
         guardar();
+        respuesta = {
+          estado: 'success',
+          mensaje: 'Te has registrado satisfactoriamente.'
+        }
+        return respuesta;
     }    
 }
 
@@ -54,8 +65,9 @@ const guardar = () => {
 
     fs.writeFile('./database/usuariosRegistrados.json', datos, (err) =>{
         if(err) throw err;
-        console.log('Datos almacenados correctamente');
+       console.log('Se almacenó correctamente')             
     })
+
 }
 
 module.exports = {
