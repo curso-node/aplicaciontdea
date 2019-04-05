@@ -36,7 +36,6 @@ app.get('/registrarse', (req, res) =>{
 
 app.post('/registrarse', (req, res) =>{
 	let datoRegistro = registrarUsuario.crearRegistro(req.body);	
-	console.log(datoRegistro);
 
 	res.render("registrarse", {
 		notificacion : datoRegistro
