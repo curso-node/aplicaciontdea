@@ -146,12 +146,16 @@ app.post('/crearCurso',(req,res)=>{
 
 });
 app.get('/dashboard/Cursos', (req, res ) => {
-	let listadoDeCursos = require('./dataBase/lista-de-cursos.json');
-	res.render('Cursos',{
-		success: req.session.succes, 
-		'datos': req.session.datosPersona,
-		'listadoCursos': listadoDeCursos
-	})
+	if(req.session.succes){
+		let listadoDeCursos = require('./dataBase/lista-de-cursos.json');
+		res.render('Cursos',{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona,
+			'listadoCursos': listadoDeCursos
+		})
+	} else{
+		res.redirect("../ingresar");
+	}
 })
 app.post('/dashboard/inscritos',(req,res)=>{
 	crudCoordinador.verInscritos(req.body.idCur);

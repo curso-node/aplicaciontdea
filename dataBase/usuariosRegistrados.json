@@ -15,34 +15,9 @@
     "telefono": "595959",
     "rol": "aspirante",
     "cursosRegistrados": [
-<<<<<<< HEAD
       "1",
       "2"
-=======
-      "3",
-      "2",
-      "1"
->>>>>>> b63eecb1719fdfdebb0d108fe7bef96e1e4dcc74
     ]
-  },
-  {
-    "identidad": "1020495804",
-    "nombre": "Sebastian",
-    "correo": "sebastianG@gmail.com",
-    "contrasena": "andres42120",
-    "telefono": "595959",
-    "rol": "aspirante",
-    "cursosRegistrados": []
-  },
-  {
-<<<<<<< HEAD
-    "identidad": "123456",
-    "nombre": "Sebastian",
-    "correo": "sebastian@gmail.com",
-    "contrasena": "andres123",
-    "telefono": "123",
-    "rol": "aspirante",
-    "cursosRegistrados": []
   },
   {
     "identidad": "102020202",
@@ -50,15 +25,6 @@
     "correo": "deisy@gmail.com",
     "contrasena": "42120",
     "telefono": "58588",
-    "rol": "aspirante",
-    "cursosRegistrados": []
-  },
-  {
-    "identidad": "102049580498",
-    "nombre": "Mario",
-    "correo": "mario@gmail.com",
-    "contrasena": "sebastian123",
-    "telefono": "595959",
     "rol": "aspirante",
     "cursosRegistrados": []
   },
@@ -133,52 +99,5 @@
     "telefono": "252525",
     "rol": "aspirante",
     "cursosRegistrados": []
-  },
-  {
-    "identidad": "25895228",
-    "nombre": "Manuela",
-    "correo": "sebastian@gmail.com",
-    "contrasena": "sebastian123",
-    "telefono": "525",
-    "rol": "aspirante",
-    "cursosRegistrados": []
-  },
-  {
-    "identidad": "252852841248152",
-    "nombre": "Manuela",
-    "correo": "sebastianG@gmail.com",
-    "contrasena": "sebastian123",
-    "telefono": "2582",
-    "rol": "aspirante",
-    "cursosRegistrados": []
-  },
-  {
-    "identidad": "1418452852",
-    "nombre": "Carlos",
-    "correo": "andres@gmail.com",
-    "contrasena": "sebastian123",
-    "telefono": "2281282",
-    "rol": "aspirante",
-    "cursosRegistrados": []
-  },
-  {
-    "identidad": "1020",
-    "nombre": "Carlos",
-    "correo": "sebastian@gmail.com",
-    "contrasena": "123",
-    "telefono": "595959",
-    "rol": "aspirante",
-    "cursosRegistrados": []
-=======
-    "identidad": "1000399852",
-    "nombre": "Edwin",
-    "correo": "edwin@gmail.com",
-    "contrasena": "edwin123",
-    "telefono": "3158331891",
-    "rol": "aspirante",
-    "cursosRegistrados": [
-      "2"
-    ]
->>>>>>> b63eecb1719fdfdebb0d108fe7bef96e1e4dcc74
   }
 ]
