@@ -35,5 +35,16 @@
     "personasRegistradas": [
       "1020474107"
     ]
+  },
+  {
+    "id": 4,
+    "nombre": "Curso con imagen",
+    "duracion": "2 horas",
+    "costo": "1234",
+    "estado": "disponible",
+    "modalidad": "presencial",
+    "descripcion": "asdasasdaasddasd",
+    "categoria": "cultura",
+    "personasRegistradas": []
   }
 ]

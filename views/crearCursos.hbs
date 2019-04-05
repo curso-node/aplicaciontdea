@@ -1,11 +1,12 @@
 {{>header}}
+<br><br><br><br><br><br>
 
 <form action="/crearcurso" method="post">
   
   <div class="form-group">
     <label for="categoria">Categoría</label>
 
-    <select id="categoria" class="form-control">
+    <select id="categoria" name="categoria" class="form-control">
       <option value="cultura">Cultura</option>
       <option value="diseno">Diseño</option>
       <option value="musica">Música</option>
@@ -50,7 +51,7 @@
     <label for="descripcion">Descripción</label><br>
     <textarea cols="10" rows="10" name="descripcion" minlength="1" maxlength="300"></textarea>
     
-  </div>
+  </div><br><br><br><br><br><br><br>
   <button class="btn btn-primary" type="submit">Crear curso</button>
 </form>
 
