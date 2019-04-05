@@ -15,8 +15,14 @@
     "telefono": "595959",
     "rol": "aspirante",
     "cursosRegistrados": [
+<<<<<<< HEAD
       "1",
       "2"
+=======
+      "3",
+      "2",
+      "1"
+>>>>>>> b63eecb1719fdfdebb0d108fe7bef96e1e4dcc74
     ]
   },
   {
@@ -29,6 +35,7 @@
     "cursosRegistrados": []
   },
   {
+<<<<<<< HEAD
     "identidad": "123456",
     "nombre": "Sebastian",
     "correo": "sebastian@gmail.com",
@@ -162,5 +169,16 @@
     "telefono": "595959",
     "rol": "aspirante",
     "cursosRegistrados": []
+=======
+    "identidad": "1000399852",
+    "nombre": "Edwin",
+    "correo": "edwin@gmail.com",
+    "contrasena": "edwin123",
+    "telefono": "3158331891",
+    "rol": "aspirante",
+    "cursosRegistrados": [
+      "2"
+    ]
+>>>>>>> b63eecb1719fdfdebb0d108fe7bef96e1e4dcc74
   }
 ]

@@ -10,6 +10,7 @@ const listadoDeCursos = require('./dataBase/lista-de-cursos');
 const fs= require('fs');
 require('./helpers');
 const crudsAspirante = require('./cruds/aspirantes');
+const crudCoordinador = require('./cruds/coordinador')
 
 const directorioPublico = path.join(__dirname, '/public');
 app.use(express.static(directorioPublico));
@@ -130,6 +131,37 @@ app.post('/dashboard', (req,res) => {
 		res.redirect('ingresar');
 	}
 })
+app.get('/dashboard/crear',(req,res)=>{
+	res.render('crearCursos', {
+		success: req.session.succes, 
+		'datos': req.session.datosPersona
+	});
+});
+app.post('/crearCurso',(req,res)=>{
+	crudCoordinador.crearCurso(req.body)
+	res.render('crearCursos', {
+		success: req.session.succes, 
+		'datos': req.session.datosPersona
+	});
+
+});
+app.get('/dashboard/Cursos', (req, res ) => {
+	let listadoDeCursos = require('./dataBase/lista-de-cursos.json');
+	res.render('Cursos',{
+		success: req.session.succes, 
+		'datos': req.session.datosPersona,
+		'listadoCursos': listadoDeCursos
+	})
+})
+app.post('/dashboard/inscritos',(req,res)=>{
+	crudCoordinador.verInscritos(req.body.idCur);
+	res.render('inscritos',{
+		success: req.session.succes, 
+		'datos': req.session.datosPersona,
+		'lista': infoPersonasRegistradas
+	})
+})
+
 
 app.get('/', (req, res) => {
 	res.render('index', {

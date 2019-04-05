@@ -1,14 +1,15 @@
-<ul class="nav navbar-nav ml-auto">
-    <li>Crear cursos</li>
-    <li>Ver todos los cursos</li>
-    <li>
-        <a href="/dashboard">Perfil</a>
-        <p>Nombre {{datos.nombre}}</p>
-    </li>
+    <ul class="nav navbar-nav ml-auto">
 
-    <li>
-        <a href="/salir">Cerrar sesión</a>
-    </li>
-</ul>
+		<a class="dropdown-item" href="/dashboard/crear">Crear cursos</a>
+        <a class="dropdown-item" href="/dashboard/verUsuarios">Ver todos los usuarios</a>
+        <a class="dropdown-item" href="/dashboard/Cursos">Cursos</a>
 
-
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{datos.nombre}}</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/dashboard">Perfil</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/salir">Cerrar sesión</a>
+            </div>
+        </li>
+    </ul>
