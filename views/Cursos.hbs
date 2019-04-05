@@ -1,54 +1,55 @@
 {{>header}}
-<br><br><br><br><br><br><br>
 
-{{#each listadoCursos}}
-        <li class="col-md-3">
-          <div class="informacionCurso">
-            <figcaption>
-                <figure>
-                    <img src="/img/programas/IconoBase.png">
-                </figure>
+<div class="container-fluid containerTop">
+  <section id="cursosAbiertos" class="container-fluid text-center">
+    <h1>Cursos disponibles</h1>
+      <ul class="row">
+      {{#each listadoCursos}}
+      <li class="col-md-3">
+        <div class="informacionCurso">
+          <figcaption>
+              <figure>
+                  <img src="/img/programas/IconoBase.png">
+              </figure>
             </figcaption>
-              
-              <div>
-                <h3>{{this.nombre}}</h3><br>
-                <p>Costo: <span>${{this.costo}}</span></p><br>
-                <p> Modalidad: <span>{{this.modalidad}}</span></p><br><br>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target='#{{this.id}}'>Mas información</button>
-
-                  <div class="modal fade" id='{{this.id}}' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">{{this.nombre}}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-
-                              <div class="modal-body">
-                                <p>Costo: <span>${{this.costo}}</span></p>
-                                <p>Modalidad: <span>{{this.modalidad}}</span></p>
-                                <p>Duración : <span>{{this.duracion}}</span></p>
-                                <div> 
-                                  <h4>Descripción:</h4>                            
-                                  <p>{{this.descripcion}}</p>
-                                </div>
-                              </div>
-
-                              <div class="modal-footer">
-                              <form action="/dashboard/inscritos" method="post">
-                                <input type="text" name="idCur" value="{{this.id}}"><br><br><br>
-                                <input type="submit" class="btn btn-primary" value="Inscritos">
-                              </form>                               
-                              </div>
-
+            <div class="datosdelCurso">
+              <h3>{{this.nombre}}</h3>
+              <p>Costo: <span>${{this.costo}}</span></p>
+              <p> Modalidad: <span>{{this.modalidad}}</span></p>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target='#{{this.id}}'>Mas información</button>
+              <div class="modal fade" id='{{this.id}}' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <h3>{{this.nombre}}</h3>
+                            <p>Costo $: <span>{{this.costo}}</span></p>
+                            <p>Modalidad: <span>{{this.modalidad}}</span></p>
+                            <p>Duración : <span>{{this.duracion}}</span></p>
+                            <div> 
+                              <h4>Descripción:</h4>                            
+                              <p class="descripcionCurso">{{this.descripcion}}</p>
                             </div>
                           </div>
+                          <div class="modal-footer">
+                              <form action="/dashboard/inscritos" method="post">
+                                <input type="hidden" name="idCur" value="{{this.id}}">
+                                <input type="submit" class="btn btn-primary" value="Inscritos">
+                              </form>                               
+                          </div>
+                        </div>
                       </div>
-              </div>
-          </div>
-        </li>
-  {{/each}}
+                    </div>
+            </div>
+        </div>
+      </li>  
+    {{/each}}
+    </ul>
+  </section>
+</div>
+
 {{>footer}}

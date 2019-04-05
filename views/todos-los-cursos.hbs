@@ -1,8 +1,9 @@
 {{>header}}
 
-<section id="cursosAbiertos" class="container-fluid text-center">
+<div class="container-fluid containerTop">
+  <section id="cursosAbiertos" class="container-fluid text-center">
     <h1>Cursos disponibles</h1>
-  <ul class="row">
+      <ul class="row">
       {{#each listadoCursos}}
         {{#cursoDisponible this.estado value="disponible"}}
       <li class="col-md-3">
@@ -50,7 +51,8 @@
       </li>  
       {{/cursoDisponible}}
     {{/each}}
-  </ul>
-</section>
+    </ul>
+  </section>
+</div>
 
 {{>footer}}

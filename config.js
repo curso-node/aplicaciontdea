@@ -12,7 +12,6 @@ require('./helpers');
 const crudsAspirante = require('./cruds/aspirantes');
 const crudCoordinador = require('./cruds/coordinador')
 
-
 const directorioPublico = path.join(__dirname, '/public');
 app.use(express.static(directorioPublico));
 
@@ -31,10 +30,18 @@ app.use(morgan('dev'));
 //Inicializacion HBS
 app.set('view engine', 'hbs');
 
-
 // Rutas de registo y ingreso
 app.get('/registrarse', (req, res) =>{
 	res.render('registrarse');
+});
+
+app.post('/registrarse', (req, res) =>{
+	let datoRegistro = registrarUsuario.crearRegistro(req.body);	
+	console.log(datoRegistro);
+
+	res.render("registrarse", {
+		notificacion : datoRegistro
+	});
 });
 
 app.get('/ingresar', (req, res) =>{
@@ -42,11 +49,6 @@ app.get('/ingresar', (req, res) =>{
 		success: req.session.succes, 
 		'datos': req.session.datosPersona,
 	});
-});
-
-app.post('/registrarse', (req, res) =>{
-	registrarUsuario.crearRegistro(req.body);	
-	res.render("registrarse");
 });
 
 app.post('/ingresar', (req, res) =>{		
@@ -58,8 +60,14 @@ app.post('/ingresar', (req, res) =>{
 			req.session.succes = true;
 			res.redirect('dashboard');
 		} else {
+			let datoRegistro =  {
+				estado: 'danger',
+				mensaje: 'El usuario o contraseña es incorrecto.'
+			}
 			req.session.succes = false;
-			res.render('ingresar');
+			res.render('ingresar', {
+				notificacion : datoRegistro
+			});
 		}
 
 });
@@ -138,12 +146,16 @@ app.post('/crearCurso',(req,res)=>{
 
 });
 app.get('/dashboard/Cursos', (req, res ) => {
-	let listadoDeCursos = require('./dataBase/lista-de-cursos.json');
-	res.render('Cursos',{
-		success: req.session.succes, 
-		'datos': req.session.datosPersona,
-		'listadoCursos': listadoDeCursos
-	})
+	if(req.session.succes){
+		let listadoDeCursos = require('./dataBase/lista-de-cursos.json');
+		res.render('Cursos',{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona,
+			'listadoCursos': listadoDeCursos
+		})
+	} else{
+		res.redirect("../ingresar");
+	}
 })
 app.post('/dashboard/inscritos',(req,res)=>{
 	crudCoordinador.verInscritos(req.body.idCur);
