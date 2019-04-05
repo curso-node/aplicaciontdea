@@ -6,27 +6,5 @@
     "contrasena": "sebastian123",
     "telefono": "123456",
     "rol": "coordinador"
-  },
-  {
-    "identidad": "1020",
-    "nombre": "Andres",
-    "correo": "andres@gmail.com",
-    "contrasena": "andres123",
-    "telefono": "3123112",
-    "rol": "aspirante",
-    "cursosRegistrados": [
-      "4",
-      "5"
-    ],
-    "cursoActual": "5"
-  },
-  {
-    "identidad": "1020585474",
-    "nombre": "Sebatian",
-    "correo": "sebastian.gutierrez@gmail.com",
-    "contrasena": "sebas123",
-    "telefono": "59697978",
-    "rol": "coordinador",
-    "cursosRegistrados": []
   }
 ]

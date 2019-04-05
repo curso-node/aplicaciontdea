@@ -178,7 +178,7 @@ if(req.session.succes){
 		'datos': req.session.datosPersona,
 		'inscritos': informacion.lista,
 		'totalInscritos': informacion.total,
-		'cursoID': informacion.Idcurso
+		'curso': informacion.Idcurso
 	})
 } else{
 	res.redirect("../ingresar")
@@ -188,7 +188,7 @@ if(req.session.succes){
 app.post('/dashboard/cerrar',(req,res)=>{
 	crudCoordinador.cerrar(req.body.ID)
 	if (req.session.succes) {
-		res.redirect("Cursos",{
+		res.render("realizado",{
 			success: req.session.succes, 
 			'datos': req.session.datosPersona	
 		})
@@ -197,9 +197,9 @@ app.post('/dashboard/cerrar',(req,res)=>{
 	}
 })
 app.post("/dashboard/eliminar",(req,res)=>{
-	if(req.session.sucess){
+	if(req.session.succes){
 		crudCoordinador.eliminar(req.body.idPer,req.body.idCur)
-		res.render("/dashboard",{
+		res.render("realizado",{
 			success: req.session.succes, 
 			'datos': req.session.datosPersona	
 		})
@@ -236,6 +236,10 @@ app.post("/actualizar",(req,res)=>{
 	crudCoordinador.actualizar(req.body)
 	if (req.session.succes) {
 		res.redirect("/dashboard");
+		res.render("realizado",{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona
+		})
 	}else{
 		res.redirect("../ingresar")
 	}

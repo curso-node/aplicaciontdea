@@ -121,6 +121,7 @@ ul li a {
 
 #cursosAbiertos li{
     list-style: none;
+    margin-top: 1.5em;
 }
 
 #cursosAbiertos h1{

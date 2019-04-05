@@ -1,43 +1,13 @@
 [
   {
-    "id": 4,
-    "nombre": "Curso con imagen",
-    "duracion": "2 horas",
-    "costo": "1234",
-    "estado": "disponible",
-    "modalidad": "presencial",
-    "descripcion": "asdasasdaasddasd",
-    "categoria": "cultura",
-    "personasRegistradas": [
-      "1000399852",
-      "1020",
-      "1020",
-      "1020"
-    ]
-  },
-  {
-    "id": 5,
-    "nombre": "Curso Madrugada",
-    "duracion": "8 horas",
+    "id": 1,
+    "nombre": "Python para principiantes",
+    "duracion": "3 meses",
     "costo": "0",
     "estado": "disponible",
-    "modalidad": "presencial",
-    "descripcion": "nada",
+    "modalidad": "virtual",
+    "descripcion": "Python",
     "categoria": "programacion",
-    "personasRegistradas": [
-      "1020",
-      "1020"
-    ]
-  },
-  {
-    "id": 3,
-    "nombre": "Artes plasticas",
-    "duracion": "40 horas",
-    "costo": "1500000",
-    "estado": "disponible",
-    "modalidad": "presencial",
-    "descripcion": "Descripción del curso",
-    "categoria": "diseno",
     "personasRegistradas": []
   }
 ]
