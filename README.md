@@ -9,6 +9,16 @@ Iniciar el servidor
 ------------------
 node config
 
+Usuario coordinador : Accesos
+-----------------------------
+sebastian@gmail.com
+sebastian123
+
+Usuario aspirante : Accesos
+-----------------------------
+andres@gmail.com
+andres123
+
 Archivo principal 
 -----------------
 Config.js

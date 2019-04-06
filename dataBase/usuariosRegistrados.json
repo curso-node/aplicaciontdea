@@ -14,6 +14,9 @@
     "contrasena": "andres123",
     "telefono": "987654321",
     "rol": "aspirante",
-    "cursosRegistrados": []
+    "cursosRegistrados": [
+      "2",
+      "1"
+    ]
   }
 ]
