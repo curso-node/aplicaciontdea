@@ -19,7 +19,7 @@ function crearRegistro (datosEstudiante) {
     }
 
     listado.forEach( (valor) => {
-        if(datos.identidad === valor.identidad){
+        if(datos.identidad === valor.identidad || datos.correo === valor.correo){
             usuarioExiste = true;
             return usuarioExiste;
         }
@@ -28,7 +28,7 @@ function crearRegistro (datosEstudiante) {
     if(usuarioExiste){      
       respuesta = {
         estado: 'danger',
-        mensaje: 'El usuario ya está registrado.'
+        mensaje: 'Ya se encuentra un usuario registrado con  el mismo documento de identidad o correo.'
       }
       return respuesta;
 

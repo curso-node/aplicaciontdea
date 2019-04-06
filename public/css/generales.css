@@ -90,7 +90,27 @@ ul li a {
     margin-top: 120px !important;
     padding: 0;
     overflow: hidden;
+    min-height: 500px;
 }
+
+.alert{
+    text-align: center;
+    font-weight: 700;
+    padding: 1em 0;
+    font-size: 18px;
+}
+
+.mensajeNoCursos{
+    text-align: center;
+    display: block;
+    width: 100%;
+    background: #f2f2f2;
+    margin: auto;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 2em 0;
+}
+
 
 
 /************* programas ****************/
@@ -203,6 +223,19 @@ ul li a {
     margin-top: 2em;
 }
 
+.contFormularioCrear{
+    width: 55%;
+}
+
+.formularios textarea{
+    width: 100%;
+    height: 150px;
+}
+
+.formularios label{
+    display: block;
+}
+
 .formularios input{
     text-align: center;
 }
@@ -220,4 +253,14 @@ ul li a {
 
 #menuDespegable{
     background-color: green;
+}
+
+/************ footer ************/
+
+footer{
+    width: 100%;
+    background: #006633;
+    padding: 1em;
+    color: #ffffff;
+    text-align: center;
 }

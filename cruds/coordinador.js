@@ -2,7 +2,6 @@ const fs = require('fs');
 cursos = require('../dataBase/lista-de-cursos');
 listaUsu = require('../dataBase/usuariosRegistrados')
 
-
 const crearCurso=(data)=>{
 	const dataC ={
 		id:(cursos.length)+1,
@@ -23,13 +22,9 @@ const crearCurso=(data)=>{
 
 			cursos.push(dataC);
 			guardar()
-
-		}else{
-			console.log("ya existe un curso con ese nombre");
 		}
-		
-	}else{
-		console.log("ya exite un curso con ese ID");
+	} else{
+		console.log("Ya existe un curso con el ID");
 	}
 }
 
@@ -48,9 +43,9 @@ const verInscritos=(curso)=>{
 	}
 	informacion={
 		lista: infoPersonasRegistradas,
-		total: IDpersonasRegistradas.length
+		total: IDpersonasRegistradas.length,
+		Idcurso:curso
 	}
-	console.log(informacion.lista)
 }
 const cerrar=(lcurso)=>{
 		let ab = cursos.find(ab => ab.id==lcurso)
@@ -62,7 +57,6 @@ const cerrar=(lcurso)=>{
 		}
 }
 const actualizar=(datos)=>{
-	console.log(datos.id)
 	let usua = listaUsu.find(wh => wh.identidad == datos.id)
 	if (!usua) {
 		console.log("El usuario no existe")
@@ -88,8 +82,6 @@ const eliminar=(usu,cur)=>{
 	if (!dataUs ) {
 		console.log("Uno de los datos es invalido. ¡verifique!")
 	}else{
-		console.log("personas:"+dataCur)
-		console.log("cursos:"+dataUs)
 		let personasNoEliminadas= []
 		for (var i = 0; i < dataCur.length; i++) {
 			if(dataCur[i]!=usu){

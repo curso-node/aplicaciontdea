@@ -1,60 +1,61 @@
 [
   {
     "id": 1,
-    "nombre": "Curso 2",
-    "duracion": "5 semanas",
-    "costo": "200000",
+    "nombre": "Python para principiantes",
+    "duracion": "3 meses",
+    "costo": "0",
     "estado": "disponible",
-    "modalidad": "presencial",
-    "descripcion": "aosdñhbasjkdhasdhjas",
-    "personasRegistradas": [
-      "1020474107"
-    ]
+    "modalidad": "virtual",
+    "descripcion": "Python",
+    "categoria": "programacion",
+    "personasRegistradas": []
   },
   {
     "id": 2,
-    "nombre": "Curso 3",
-    "duracion": "2 horas",
-    "costo": "100.000",
-    "estado": "disponible",
-    "modalidad": "virtual",
-    "descripcion": "no hacemos nada",
+    "nombre": "Diseño interiores",
+    "duracion": "2 años",
+    "costo": "2000000",
+    "estado": "cerrado",
+    "modalidad": "presencial",
+    "descripcion": "Nada",
+    "categoria": "diseno",
     "personasRegistradas": []
   },
   {
     "id": 3,
-    "nombre": "Nuevo curso",
-    "duracion": "asd",
-    "costo": "123",
-    "estado": "cerrado",
+    "nombre": "Vocalización",
+    "duracion": "6 meses",
+    "costo": "100000",
+    "estado": "disponible",
     "modalidad": "presencial",
-    "descripcion": "asdasasd",
-    "personasRegistradas": [
-      "102020202"
-    ]
+    "descripcion": "Opera",
+    "categoria": "musica",
+    "personasRegistradas": []
   },
   {
     "id": 4,
-    "nombre": "Curso con imagen",
-    "duracion": "2 horas",
-    "costo": "1234",
-    "estado": "disponible",
-    "modalidad": "presencial",
-    "descripcion": "asdasasdaasddasd",
-    "categoria": "cultura",
+    "nombre": "NodeJS",
+    "duracion": "1 mes",
+    "costo": "0",
+    "estado": "cerrado",
+    "modalidad": "virtual",
+    "descripcion": "Introducción a nodejs",
+    "categoria": "programacion",
     "personasRegistradas": [
       "1000399852"
     ]
   },
   {
     "id": 5,
-    "nombre": "Curso Madrugada",
-    "duracion": "8 horas",
-    "costo": "0",
+    "nombre": "Ultima creación - septimo arte",
+    "duracion": "30 minutos",
+    "costo": "1000000",
     "estado": "disponible",
     "modalidad": "presencial",
-    "descripcion": "nada",
-    "categoria": "programacion",
-    "personasRegistradas": []
+    "descripcion": "Probando Creación de cursos para el ultimp test",
+    "categoria": "diseno",
+    "personasRegistradas": [
+      "1000399852"
+    ]
   }
 ]

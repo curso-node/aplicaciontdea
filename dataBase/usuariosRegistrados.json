@@ -1,6 +1,6 @@
 [
   {
-    "identidad": "123456789",
+    "identidad": "1234567899",
     "nombre": "Sebastian",
     "correo": "sebastian@gmail.com",
     "contrasena": "sebastian123",
@@ -8,39 +8,25 @@
     "rol": "coordinador"
   },
   {
-    "identidad": "1020474107",
-    "nombre": "Andres",
-    "correo": "andres@gmail.com",
-    "contrasena": "andres123",
-    "telefono": "595959",
-    "rol": "aspirante",
-    "cursosRegistrados": [
-      "1"
-    ],
-    "cursoActual": "2"
-  },
-  {
-    "identidad": "00002310",
-    "nombre": "Ella",
-    "correo": "lavieinrose@gmail.com",
-    "contrasena": "42120",
-    "telefono": "2345641",
-    "rol": "coordinador",
-    "cursosRegistrados": [
-      "3"
-    ],
+    "identidad": "0000000",
+    "nombre": "Nadie",
+    "correo": "notengo@gmail.com",
+    "contrasena": "edwin123",
+    "telefono": "31232421",
+    "rol": "usuario",
+    "cursosRegistrados": [],
     "cursoActual": "2"
   },
   {
     "identidad": "1000399852",
-    "nombre": "Edwin",
-    "correo": "edwin@gmail.com",
+    "nombre": "Edwin Palacios",
+    "correo": "edwinrtz@gmail.com",
     "contrasena": "edwin123",
     "telefono": "3158331891",
-    "rol": "aspirante",
+    "rol": "docente",
     "cursosRegistrados": [
       "4"
     ],
-    "cursoActual": "2"
+    "cursoActual": "4"
   }
 ]
