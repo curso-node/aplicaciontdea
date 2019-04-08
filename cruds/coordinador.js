@@ -2,30 +2,29 @@ const fs = require('fs');
 cursos = require('../dataBase/lista-de-cursos');
 listaUsu = require('../dataBase/usuariosRegistrados')
 
-const crearCurso=(data)=>{
-	const dataC ={
-		id:(cursos.length)+1,
+//Models
+const cursosModel = require('../Models/cursos')
+
+
+const crearCurso=(data)=>{	
+	let crear = new cursosModel({
 		nombre:data.nombre,
-		duracion: data.duracion,
+		duracion:data.duracion,
 		costo:data.costo,
-		estado:"disponible",
 		modalidad:data.modalidad,
 		descripcion:data.descripcion,
 		categoria:data.categoria,
-		personasRegistradas:[]
-	};	
-	let Ident = cursos.find(xxx => xxx.id == dataC.id);
+		personasRegistradas:[ ]
+	});
 
-	if (!Ident) {
-		let nm = cursos.find(varC => varC.nombre == dataC.nombre);
-		if (!nm) {
-
-			cursos.push(dataC);
-			guardar()
+	crear.save((err)=>{
+		if (err) {
+			console.log(err)
+		}else{
+			console.log("creado con exito")
+			
 		}
-	} else{
-		console.log("Ya existe un curso con el ID");
-	}
+	})
 }
 
 const guardar =()=>{

@@ -13,11 +13,24 @@ const crudsAspirante = require('./cruds/aspirantes');
 const crudCoordinador = require('./cruds/coordinador')
 const listadoDeUsuarios = require('./dataBase/usuariosRegistrados')
 
+//Models
+const cursosModel = require('./Models/cursos')
+
 const directorioPublico = path.join(__dirname, '/public');
 app.use(express.static(directorioPublico));
 
 const directorioPartials = path.join(__dirname, '/widgets');
 hbs.registerPartials(directorioPartials);
+
+//conexion a base de datos con mongoose
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/tdea', {useNewUrlParser: true});
+//verificar conexion
+const connection = mongoose.connection;
+connection.on('error', console.error.bind(console, 'connection error:'));
+connection.once('open', function() {
+  console.log("we're connected")
+});
 
 //Permite leer el cuerpo en las respuestas del parametro (req -> peticion)
 app.use(bodyParser.json());
@@ -142,29 +155,45 @@ app.post('/dashboard', (req,res) => {
 	}
 })
 app.get('/dashboard/crear',(req,res)=>{
-	res.render('crearCursos', {
-		success: req.session.succes, 
-		'datos': req.session.datosPersona
-	});
+	if (req.session.succes) {
+		res.render('crearCursos', {
+			success: req.session.succes, 
+			'datos': req.session.datosPersona
+		});
+	}else{
+		res.redirect("../ingresar")
+	}
 });
-app.post('/crearCurso',(req,res)=>{
-	let datoRegistros = crudCoordinador.crearCurso(req.body);
-	console.log(datoRegistros);
-	res.render('crearCursos', {
-		success: req.session.succes, 
-		'datos': req.session.datosPersona
-	});
 
+app.post('/crearCurso',(req,res)=>{
+	if (req.session.succes) {
+		crudCoordinador.crearCurso(req.body)
+	res.render('crearCursos', {
+			success: req.session.succes, 
+			'datos': req.session.datosPersona
+			});
+}else{
+	res.redirect("../ingresar")
+}
 });
 
 
 app.get('/dashboard/Cursos', (req, res ) => {
 	if(req.session.succes){
-		res.render('Cursos',{
-			success: req.session.succes, 
-			'datos': req.session.datosPersona,
-			'listadoCursos': listadoDeCursos
+		cursosModel.find({},(err,respuesta)=>{
+			if (err) {
+				console.log(err)
+			}
+			else{
+				res.render('Cursos',{
+				success: req.session.succes, 
+				'datos': req.session.datosPersona,
+				'listadoCursos': respuesta
+			})
+				
+			}
 		})
+		
 	} else{
 		res.redirect("../ingresar");
 	}

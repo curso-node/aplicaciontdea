@@ -1,4 +1,5 @@
 const fs= require('fs');
+const usuariosModel = require("../Models/usuarios")
 
 //Listado para alcenar registros
 let listado = [];
@@ -8,15 +9,13 @@ function crearRegistro (datosEstudiante) {
     let usuarioExiste = false;
     listar();
 
-    let datos = {
+    let datos = new usuariosModel({
         identidad : datosEstudiante.dt,
         nombre : datosEstudiante.nombre,
         correo : datosEstudiante.correo,
         contrasena : datosEstudiante.contrasena,
         telefono : datosEstudiante.tel,
-        rol: 'aspirante',
-        cursosRegistrados: []
-    }
+    })
 
     listado.forEach( (valor) => {
         if(datos.identidad === valor.identidad || datos.correo === valor.correo){
@@ -33,13 +32,18 @@ function crearRegistro (datosEstudiante) {
       return respuesta;
 
     } else{
-        listado.push(datos);
-        guardar();
+        // listado.push(datos);
+        // guardar();
+        datos.save((err)=>{
+            if (err) {
+                console.log(err)
+            }  
+        })
         respuesta = {
-          estado: 'success',
-          mensaje: 'Te has registrado satisfactoriamente.'
+            estado: 'success',
+            mensaje: 'Te has registrado satisfactoriamente.'
         }
-        return respuesta;
+        return respuesta;    
     }    
 }
 
