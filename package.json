@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "servidor express para el sprint1",
-  "main": "config.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
@@ -19,10 +19,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/curso-node/PrimerSprint.git"
+    "url": "https://github.com/curso-node/aplicaciontdea"
   },
   "bugs": {
-    "url": "https://github.com/curso-node/PrimerSprint/issues"
+    "url": "https://github.com/curso-node/aplicaciontdea/issues"
   },
-  "homepage": "https://github.com/curso-node/PrimerSprint#readme"
+  "homepage": "https://github.com/curso-node/aplicaciontdea#readme"
 }
