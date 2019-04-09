@@ -266,7 +266,7 @@ app.get('*', (req, res) => {
 
 
 //const PORT = 3000;
-const process.env.PORT = process.env.PORT || 3000;
-app.listen(process.env.PORT, function () {
-	console.log(`Servidor iniciado en el puerto ${process.env.PORT}`);
+const PUERTO = process.env.PORT || 3000;
+app.listen(PUERTO, function () {
+	console.log(`Servidor iniciado en el puerto ${PUERTO}`);
 });
