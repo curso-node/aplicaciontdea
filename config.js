@@ -4,17 +4,18 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
-const registrarUsuario = require('./dataBase/registrarUsuario');
+// const registrarUsuario = require('./dataBase/registrarUsuario');
 const expressSession = require('express-session');
-const listadoDeCursos = require('./dataBase/lista-de-cursos');
+// const listadoDeCursos = require('./dataBase/lista-de-cursos');
 const fs= require('fs');
 require('./helpers');
 const crudsAspirante = require('./cruds/aspirantes');
-const crudCoordinador = require('./cruds/coordinador')
-const listadoDeUsuarios = require('./dataBase/usuariosRegistrados')
+const crudCoordinador = require('./cruds/coordinador');
+// const listadoDeUsuarios = require('./dataBase/usuariosRegistrados');
 
 //Models
 const cursosModel = require('./Models/cursos')
+const usuarioModels=require('./Models/usuarios')
 
 const directorioPublico = path.join(__dirname, '/public');
 app.use(express.static(directorioPublico));
@@ -64,10 +65,12 @@ app.get('/ingresar', (req, res) =>{
 	});
 });
 
-app.post('/ingresar', (req, res) =>{		
+app.post('/ingresar', (req, res) =>{
+	
+let ingresar =() =>{ 
 	let verificar = require('./validarAccesos');
-	let validarUsuario = verificar.existeUsuario(req.body);
-
+	let validarUsuario = verificar.existeUsuario(req.body,baseusuarios);
+	console.log(validarUsuario.usuarioExiste)
 		if(validarUsuario.usuarioExiste){
 			req.session.datosPersona = validarUsuario.datosUsuario;
 			req.session.succes = true;
@@ -82,16 +85,31 @@ app.post('/ingresar', (req, res) =>{
 				notificacion : datoRegistro
 			});
 		}
-
+}
+let baseusuarios =  usuarioModels.find({},(err,resp)=>{
+	    if (err) {
+	        throw (err)
+	    }else{
+	        baseusuarios = resp
+	        ingresar()
+	    }
+	})	
 });
 
 app.get('/dashboard/todos-los-cursos', (req, res ) => {
 	if(req.session.succes && req.session.datosPersona.rol === 'aspirante'){
-		res.render('todos-los-cursos',{
-			success: req.session.succes, 
-			'datos': req.session.datosPersona,
-			'listadoCursos' : listadoDeCursos
-			})
+		cursosModel.find({estado:"disponible"},(err,respuesta)=>{
+			if (err) {
+				throw (err)
+			}else{
+				res.render('todos-los-cursos',{
+					success: req.session.succes, 
+					'datos': req.session.datosPersona,
+					'listadoCursos' : respuesta
+				})
+			}
+
+		})
 	} else{
 		res.redirect('../ingresar');
 	}
@@ -101,7 +119,7 @@ app.get('/dashboard/todos-los-cursos', (req, res ) => {
 app.get('/dashboard', (req,res) => {
 	if(req.session.succes){
 		if(req.session.succes && req.session.datosPersona.rol === 'aspirante'){
-			let cursosInscrito= crudsAspirante.mostrarCursoInscritos(req.session.cursosInscrito, req.session.datosPersona.cursosRegistrados);
+			let cursosInscrito = crudsAspirante.mostrarCursoInscritos(req.session.datosPersona.identidad);
 			res.render('dashboard', {
 				success: req.session.succes, 
 				'datos': req.session.datosPersona,
@@ -118,32 +136,39 @@ app.get('/dashboard', (req,res) => {
 	}	
 })
 
-app.post('/dashboard', (req,res) => {	
+app.post('/cancelarCurso', (req,res) => {	
 	if(req.session.succes){
-		let confirmarRegistro;
 		let cancelarCurso;
 		let datoRegistro;
-		confirmarRegistro = crudsAspirante.inscribirseAunCurso(req.body.idCurso, req.body.identidad);
-    
-    //Traer los ultimos cambios en la base de datos de los usuarios
-    let baseUsuarios = require('./dataBase/usuariosRegistrados');
-    let traerDatosUsuario = baseUsuarios.find( datos => {
-      return (datos.identidad == req.session.datosPersona.identidad);
-		})
-    
-    //Cancelar un curso
+    	//Cancelar un curso
 		cancelarCurso = crudsAspirante.eliminarCurso(req.body.cancelar_idCurso, req.body.cancelar_identidad);
-		
-		if(confirmarRegistro){
-			datoRegistro = confirmarRegistro;
-		} else {
-			datoRegistro = cancelarCurso;
-		}
+		datoRegistro = cancelarCurso;
+
+    // //Mostrar cursos inscrito
+    let cursosInscrito= crudsAspirante.mostrarCursoInscritos(req.body.cancelar_identidad);
+
+    res.render('dashboard', {
+      success: req.session.succes, 
+      'datos': req.session.datosPersona,
+			'cursosInscrito' : cursosInscrito,
+			notificacion: datoRegistro
+    });
+	} else{
+		res.redirect('ingresar');
+	}
+})
+app.post('/registrarseCurso', (req,res) => {	
+	if(req.session.succes){
+		let datoRegistro;
+		let confirmarRegistro;
+
+		//registrase a un curso
+		confirmarRegistro = crudsAspirante.inscribirseAunCurso(req.body.idCurso, req.body.identidad);
+		datoRegistro = confirmarRegistro;
 
     //Mostrar cursos inscrito
-    req.session.datosPersona = traerDatosUsuario;
-    let cursosInscrito= crudsAspirante.mostrarCursoInscritos(req.session.cursosInscrito, req.session.datosPersona.cursosRegistrados);
-
+    let cursosInscrito= crudsAspirante.mostrarCursoInscritos(req.body.identidad);
+    
     res.render('dashboard', {
       success: req.session.succes, 
       'datos': req.session.datosPersona,
@@ -168,17 +193,17 @@ app.get('/dashboard/crear',(req,res)=>{
 app.post('/crearCurso',(req,res)=>{
 	if (req.session.succes) {
 		crudCoordinador.crearCurso(req.body)
-	res.render('crearCursos', {
+		res.render('crearCursos', {
 			success: req.session.succes, 
 			'datos': req.session.datosPersona
-			});
+		});
 }else{
 	res.redirect("../ingresar")
 }
 });
 
 
-app.get('/dashboard/Cursos', (req, res ) => {
+app.get('/dashboard/Cursos', (req, res) => {
 	if(req.session.succes){
 		cursosModel.find({},(err,respuesta)=>{
 			if (err) {
@@ -200,20 +225,22 @@ app.get('/dashboard/Cursos', (req, res ) => {
 })
 
 app.post('/dashboard/inscritos',(req,res)=>{
-crudCoordinador.verInscritos(req.body.idCur);
-if(req.session.succes){
-	res.render('inscritos',{
-		success: req.session.succes, 
-		'datos': req.session.datosPersona,
-		'inscritos': informacion.lista,
-		'totalInscritos': informacion.total,
-		'curso': informacion.Idcurso
-	})
-} else{
-	res.redirect("../ingresar")
-
-}
+	crudCoordinador.verInscritos(req.body.idCur);
+	if(req.session.succes){
+		setTimeout(function() {
+			res.render('inscritos',{
+				success: req.session.succes, 
+				'datos': req.session.datosPersona,
+				'inscritos': informacion.lista,
+				'totalInscritos': informacion.total,
+				'curso': informacion.Idcurso
+			})
+		},500);
+	} else{
+		res.redirect("../ingresar")
+	}
 })
+
 app.post('/dashboard/cerrar',(req,res)=>{
 	crudCoordinador.cerrar(req.body.ID)
 	if (req.session.succes) {
@@ -239,10 +266,16 @@ app.post("/dashboard/eliminar",(req,res)=>{
 })
 app.get('/dashboard/usuarios',(req,res)=>{
 	if (req.session.succes) {
-		res.render('verUsuarios',{
-			success: req.session.succes, 
-			'datos': req.session.datosPersona,
-			'lista':listadoDeUsuarios
+		usuarioModels.find({},(err,respuesta)=>{
+			if (err) {
+				throw (err)
+			}else{
+				res.render('verUsuarios',{
+					success: req.session.succes, 
+					'datos': req.session.datosPersona,
+					'lista':respuesta
+				})
+			}
 		})
 	}else{
 		res.redirect('../ingresar')
@@ -252,11 +285,13 @@ app.get('/dashboard/usuarios',(req,res)=>{
 app.post("/dashboard/actualizar",(req,res)=>{
 	if(req.session.succes){
 		crudCoordinador.infoUsu(req.body.id)
+	setTimeout(function() {
 		res.render("actualizar",{
 			success: req.session.succes, 
 			'datos': req.session.datosPersona,
 			'informacion':informacion
 		})
+	}, 50);
 	}else{
 		res.redirect("../ingresar")
 	}
@@ -274,11 +309,20 @@ app.post("/actualizar",(req,res)=>{
 })
 
 app.get('/', (req, res) => {
-	res.render('index', {
-		success: req.session.succes, 
-		'datos': req.session.datosPersona,
-		'listadoCursos' : listadoDeCursos
-		});
+	cursosModel.find({},(err,respuesta)=>{
+		if (err) {
+			throw (err)
+		}else{
+			res.render('index', {
+				success: req.session.succes, 
+				'datos': req.session.datosPersona,
+				'listadoCursos' : respuesta
+			});
+
+		}
+
+	
+	})
 });
 
 // Ruta para cerrar la sesion

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const cursosRegistradosSchema = new Schema({curso:{type:String}})
 
 const registrarUsuariosSchema = new Schema({
 	nombre:{
@@ -21,10 +22,10 @@ const registrarUsuariosSchema = new Schema({
 		type:String,
 		default:'aspirante'
 	},
-	cursosRegistrados:{
-		type:Array,
-		require:true
-	},
+	cursosRegistrados:[{
+			type:Array,
+			default:''
+		}],
 	cursoActual:{
 		type:String,
 		default:""

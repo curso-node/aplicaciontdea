@@ -1,6 +1,5 @@
-let baseusuarios = require('./dataBase/usuariosRegistrados');
 
-function existeUsuario (datosUsuario) {
+existeUsuario=(datosUsuario,baseusuarios)=>{
     let datosSesion = {};
     baseusuarios.map( (usuario) => {
         if((datosUsuario.correo == usuario.correo) && (datosUsuario.contrasena == usuario.contrasena)){
@@ -13,11 +12,10 @@ function existeUsuario (datosUsuario) {
                     tel: usuario.telefono,
                     cursosRegistrados : usuario.cursosRegistrados
                 },
-                usuarioExiste: true
+                usuarioExiste:true      
             };
         }
     })
-    
     return datosSesion;
 }
 

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+// const personasRegistradasSchema = new Schema({usuario:{type:Number}})
 const crearCursoSchema = new Schema({
 	nombre:{
 		type:String, 
@@ -8,6 +9,10 @@ const crearCursoSchema = new Schema({
 	descripcion:{
 		type:String, 
 		require:true
+	},
+	estado:{
+		type:String,
+		default:"disponible"
 	},
 	costo:{
 		type:Number, 
@@ -24,7 +29,7 @@ const crearCursoSchema = new Schema({
 	},
 	personasRegistradas:{
 		type:Array,
-		require:true
+		default:''
 	}
 });
 

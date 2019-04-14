@@ -1,9 +1,18 @@
 const fs = require('fs');
-cursos = require('../dataBase/lista-de-cursos');
-listaUsu = require('../dataBase/usuariosRegistrados')
+// cursos = require('../dataBase/lista-de-cursos');
+// listaUsu = require('../dataBase/usuariosRegistrados')
 
 //Models
 const cursosModel = require('../Models/cursos')
+const usuariosModel = require('../Models/usuarios')
+usuariosModel.find({},(err,respuesta)=>{
+	if (err) {
+		console.log(err)
+	}
+	else{
+		usuarios = respuesta
+	}	
+})
 
 
 const crearCurso=(data)=>{	
@@ -26,89 +35,112 @@ const crearCurso=(data)=>{
 		}
 	})
 }
-
-const guardar =()=>{
-	let texto = JSON.stringify(cursos, null,2)
-	fs.writeFile("./dataBase/lista-de-cursos.json",texto,(err)=> {
-		if(err){throw(err)}	else{console.log('Realizado con exito')}});
-}	
 const verInscritos=(curso)=>{
-	let IDpersonasRegistradas = cursos.find(cur => cur.id == curso).personasRegistradas
-	infoPersonasRegistradas=[]
-	for (var i = 0; i < IDpersonasRegistradas.length; i++) {
-		info = listaUsu.find(xx=>xx.identidad == IDpersonasRegistradas[i])
-		info.cursoActual = curso
-		infoPersonasRegistradas.push(info)
+	IDpersonasRegistradas = []
+	infoPersonasRegistradas = []
+
+	let mostrar=()=>{
+		informacion={
+			lista: infoPersonasRegistradas,
+			total: IDpersonasRegistradas.length,
+			Idcurso:curso
+		}
 	}
-	informacion={
-		lista: infoPersonasRegistradas,
-		total: IDpersonasRegistradas.length,
-		Idcurso:curso
-	}
+
+	cursosModel.findOne({_id:curso},(err,respuesta)=>
+	{
+		if (err) 
+		{
+			return console.log(err)
+		}
+		cursoSelected = respuesta
+		IDpersonasRegistradas = cursoSelected.personasRegistradas
+			IDpersonasRegistradas.map((value,index)=>{
+				info = usuarios.find(vv =>vv.identidad == IDpersonasRegistradas[index])
+				info.cursoActual = curso
+				infoPersonasRegistradas.push(info)
+			})
+			setTimeout(function() {
+				mostrar()
+			}, 125);
+	})
 }
 const cerrar=(lcurso)=>{
-		let ab = cursos.find(ab => ab.id==lcurso)
-		if (!ab) {
-			console.log('Ese curso no existe')
-		}else{
-			ab['estado']="cerrado"
-			guardar()
-		}
+		cursosModel.updateOne({_id:lcurso},{$set:{estado:"cerrado"}},(err,resp)=>{
+			if (err) {
+				throw (err)
+			}else{
+				console.log(resp)
+			}
+		})
 }
 const actualizar=(datos)=>{
-	let usua = listaUsu.find(wh => wh.identidad == datos.id)
-	if (!usua) {
-		console.log("El usuario no existe")
-	}else{
-		usua['nombre'] = datos.nombre
-		usua['identidad'] = datos.identidad
-		usua['correo'] = datos.correo
-		usua['telefono'] = datos.telefono
-		usua['rol'] = datos.rol
-		guardarUsu()
-
-	}
+	usuariosModel.updateOne({identidad:datos.id},{$set:{nombre:datos.nombre}},(err,resp)=>{})
+	usuariosModel.updateOne({identidad:datos.id},{$set:{correo:datos.correo}},(err,resp)=>{})
+	usuariosModel.updateOne({identidad:datos.id},{$set:{telefono:datos.telefono}},(err,resp)=>{})
+	usuariosModel.updateOne({identidad:datos.id},{$set:{rol:datos.rol}},(err,resp)=>{})
 }
-const guardarUsu=()=>{
-	let txt = JSON.stringify(listaUsu,null,2)
-	fs.writeFile("./dataBase/usuariosRegistrados.json",txt,(err)=> {
-		if(err){throw(err)}	else{console.log('Realizado con exito')}})
-}
-
 const eliminar=(usu,cur)=>{
-	let dataUs = listaUsu.find(xf => xf.identidad == usu ).cursosRegistrados
-	let dataCur = cursos.find(xfc => xfc.id == cur).personasRegistradas
-	if (!dataUs ) {
-		console.log("Uno de los datos es invalido. ¡verifique!")
-	}else{
-		let personasNoEliminadas= []
-		for (var i = 0; i < dataCur.length; i++) {
-			if(dataCur[i]!=usu){
-				personasNoEliminadas.push(dataCur[i])
-				
-			}
+	usuariosModel.findOne({identidad:usu},(err,resp)=>{
+		if (err) {
+			throw (err)
+		}else{
+			dataUs = resp.cursosRegistrados
+			cursosModel.findOne({_id:cur},(err,resp)=>{
+				if (err) {
+					throw (err)
+				}else{
+					dataCur = resp.personasRegistradas
+				}
+
+				if (!dataUs ) {
+					console.log("Uno de los datos es invalido. ¡verifique!")
+				}else{
+					let personasNoEliminadas= []
+					for (var i = 0; i < dataCur.length; i++) {
+						if(dataCur[i]!=usu){
+							personasNoEliminadas.push(dataCur[i])	
+						}
+					}
+					cursosModel.updateOne({_id:cur},{$set:{personasRegistradas:personasNoEliminadas}},(err,respuesta)=>{})	
+						
+					cursosNoEliminados = []
+					for (var i = 0; i < dataUs.length; i++) {
+						if(dataUs[i]!=cur){
+							cursosNoEliminados.push(dataUs[i])		
+						}
+					}
+					usuariosModel.updateOne({identidad:usu},{$set:{cursosRegistrados:cursosNoEliminados}},(err,respuesta)=>{})
+				}
+			})
+			
 		}
-		cursos.find(c => c.id == cur).personasRegistradas = personasNoEliminadas
-		guardar()
-		cursosNoEliminados = []
-		for (var i = 0; i < dataUs.length; i++) {
-			if(dataUs[i]!=cur){
-				cursosNoEliminados.push(dataUs[i])
-			}
-		}
-		listaUsu.find(u => u.identidad == usu).cursosRegistrados = cursosNoEliminados
-		guardarUsu()
-	}
+	})
+	respuesta = {
+        estado: 'success',
+        mensaje: 'Has cancelado el registro al curso',
+        nombre: 'eliminarCurso',
+    } 
+
+    return respuesta;
 }
 const infoUsu=(ID)=>{
-	let infoUsuario = listaUsu.find(iu => iu.identidad == ID)
-	informacion={
-		nombre:infoUsuario.nombre,
-		identidad:infoUsuario.identidad,
-		correo:infoUsuario.correo,
-		telefono:infoUsuario.telefono,
-		rol:infoUsuario.rol
-	}
+	
+
+	usuariosModel.findOne({identidad:ID},(err,resp)=>{
+		if (err) {
+			throw err
+		}else{
+			informacion={
+				nombre:resp.nombre,
+				identidad:resp.identidad,
+				correo:resp.correo,
+				telefono:resp.telefono,
+				rol:resp.rol
+			}
+		}
+	})
+	
 }
 module.exports={
 	crearCurso,
