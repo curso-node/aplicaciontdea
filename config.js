@@ -4,8 +4,9 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
-// const registrarUsuario = require('./dataBase/registrarUsuario');
+const registrarUsuario = require('./registrarUsuario');
 const expressSession = require('express-session');
+const MemoryStore = require('memorystore')(expressSession)
 // const listadoDeCursos = require('./dataBase/lista-de-cursos');
 const fs= require('fs');
 require('./helpers');
@@ -15,7 +16,7 @@ const crudCoordinador = require('./cruds/coordinador');
 
 //Models
 const cursosModel = require('./Models/cursos')
-const usuarioModels=require('./Models/usuarios')
+const usuariosModel=require('./Models/usuarios')
 
 const directorioPublico = path.join(__dirname, '/public');
 app.use(express.static(directorioPublico));
@@ -23,21 +24,29 @@ app.use(express.static(directorioPublico));
 const directorioPartials = path.join(__dirname, '/widgets');
 hbs.registerPartials(directorioPartials);
 
+
 //conexion a base de datos con mongoose
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/tdea', {useNewUrlParser: true});
-//verificar conexion
-const connection = mongoose.connection;
-connection.on('error', console.error.bind(console, 'connection error:'));
-connection.once('open', function() {
-  console.log("we're connected")
+mongoose.connect('mongodb+srv://admintdea:admin@tdea-yhdq8.mongodb.net/tdea?retryWrites=true', {useNewUrlParser: true},(err,resultado)=>{
+	if (err) {
+		throw (err)
+	}else{
+		console.log("we're connected")
+	}
 });
-
 //Permite leer el cuerpo en las respuestas del parametro (req -> peticion)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(expressSession({ secret: 'llave', saveUninitialized: false, resave: false}));
+app.use(expressSession({
+	cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+      checkPeriod: 900000 // prune expired entries every 15minutes
+    }),
+ 	secret: 'llave', 
+ 	saveUninitialized: true, 
+ 	resave: true
+ }));
 
 //peticiones servidor
 app.use(morgan('dev'));
@@ -68,6 +77,7 @@ app.get('/ingresar', (req, res) =>{
 app.post('/ingresar', (req, res) =>{
 	
 let ingresar =() =>{ 
+
 	let verificar = require('./validarAccesos');
 	let validarUsuario = verificar.existeUsuario(req.body,baseusuarios);
 	console.log(validarUsuario.usuarioExiste)
@@ -86,7 +96,7 @@ let ingresar =() =>{
 			});
 		}
 }
-let baseusuarios =  usuarioModels.find({},(err,resp)=>{
+let baseusuarios =  usuariosModel.find({},(err,resp)=>{
 	    if (err) {
 	        throw (err)
 	    }else{
@@ -120,11 +130,13 @@ app.get('/dashboard', (req,res) => {
 	if(req.session.succes){
 		if(req.session.succes && req.session.datosPersona.rol === 'aspirante'){
 			let cursosInscrito = crudsAspirante.mostrarCursoInscritos(req.session.datosPersona.identidad);
-			res.render('dashboard', {
-				success: req.session.succes, 
-				'datos': req.session.datosPersona,
-				'cursosInscrito' : cursosInscrito
-				});
+			setTimeout(function() {
+				res.render('dashboard', {
+					success: req.session.succes, 
+					'datos': req.session.datosPersona,
+					'cursosInscrito' : cursosInscrito
+					});
+			}, 1000);
 		} else if(req.session.succes && req.session.datosPersona.rol === 'coordinador'){
 			res.render('dashboard', {
 				success: req.session.succes, 
@@ -266,7 +278,7 @@ app.post("/dashboard/eliminar",(req,res)=>{
 })
 app.get('/dashboard/usuarios',(req,res)=>{
 	if (req.session.succes) {
-		usuarioModels.find({},(err,respuesta)=>{
+		usuariosModel.find({},(err,respuesta)=>{
 			if (err) {
 				throw (err)
 			}else{
@@ -284,18 +296,31 @@ app.get('/dashboard/usuarios',(req,res)=>{
 })
 app.post("/dashboard/actualizar",(req,res)=>{
 	if(req.session.succes){
-		crudCoordinador.infoUsu(req.body.id)
-	setTimeout(function() {
-		res.render("actualizar",{
-			success: req.session.succes, 
-			'datos': req.session.datosPersona,
-			'informacion':informacion
+		usuariosModel.findOne({identidad:req.body.id},(err,resp)=>{
+			if (err) {
+				throw err
+			}else{
+				informacion={
+					nombre:resp.nombre,
+					identidad:resp.identidad,
+					correo:resp.correo,
+					telefono:resp.telefono,
+					rol:resp.rol
+				}
+				res.render("actualizar",{
+					success: req.session.succes, 
+					'datos': req.session.datosPersona,
+					'informacion':informacion
+				})		
+			}
 		})
-	}, 50);
-	}else{
+	}
+	else{
 		res.redirect("../ingresar")
 	}
 })
+
+
 app.post("/actualizar",(req,res)=>{
 	crudCoordinador.actualizar(req.body)
 	if (req.session.succes) {

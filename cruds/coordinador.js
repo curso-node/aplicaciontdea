@@ -124,29 +124,11 @@ const eliminar=(usu,cur)=>{
 
     return respuesta;
 }
-const infoUsu=(ID)=>{
-	
 
-	usuariosModel.findOne({identidad:ID},(err,resp)=>{
-		if (err) {
-			throw err
-		}else{
-			informacion={
-				nombre:resp.nombre,
-				identidad:resp.identidad,
-				correo:resp.correo,
-				telefono:resp.telefono,
-				rol:resp.rol
-			}
-		}
-	})
-	
-}
 module.exports={
 	crearCurso,
 	actualizar,
 	eliminar,
-	infoUsu,
 	verInscritos,
 	cerrar
 
