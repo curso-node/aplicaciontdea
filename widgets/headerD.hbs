@@ -14,24 +14,15 @@
     <a class="navbar-brand" href="/dashboard">
         <img src="/img/logo-tdea.jpg" alt="Logo tdea">
     </a>
-  {{#if datos}}
-    {{#Rol datos.rol value="coordinador"}}
-        {{>header_coordinador}}
-      {{else}}
-        {{>header_aspirante}}
-    {{/Rol}}
-
-  {{else}}
-      <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item nav-link enlaces">
-          <a href="/#cursos">Ver los cursos</a></li>
-        <li id="btn_ingresar" class="nav-item nav-link enlaces">
-          <a href="/ingresar">Ingresar</a>
-        </li>
-        <li id="btn_registrarse" class="nav-item nav-link enlaces">
-          <a href="/registrarse">Registrarse</a>
-        </li>
-      </ul>
-  {{/if}}
-
+  <ul class="nav navbar-nav ml-auto" >
+    <li class="nav-item nav-link enlaces">
+        <a class="enlacesNav enlaces" href="/dashboard">Cursos</a>
+    </li>
+    <li class="nav-item dropdown" >
+        <a class="nav-link dropdown-toggle datosUsuario" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{datos.nombre}}</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item enlacesNav" href="/salir">Cerrar sesión</a>
+      </div>
+  </li>
+</ul>
 </nav>

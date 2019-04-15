@@ -1,4 +1,4 @@
-const fs = require('fs');
+// const fs = require('fs');
 // cursos = require('../dataBase/lista-de-cursos');
 // listaUsu = require('../dataBase/usuariosRegistrados')
 
@@ -64,21 +64,67 @@ const verInscritos=(curso)=>{
 				mostrar()
 			}, 125);
 	})
+	usuariosModel.find({rol:'docente'},(err,resp)=>{
+		if (err) {
+			throw (err)
+		}else{
+			profes = resp
+			console.log(profes)
+		}
+	})
 }
-const cerrar=(lcurso)=>{
-		cursosModel.updateOne({_id:lcurso},{$set:{estado:"cerrado"}},(err,resp)=>{
-			if (err) {
-				throw (err)
-			}else{
-				console.log(resp)
-			}
-		})
+const cerrar=(lcurso,idDocente)=>{
+	usuariosModel.findOne({_id:idDocente},(err,resp)=>{
+		if (err) {
+			throw (err)
+		}else{
+			usuariosModel.updateOne({_id:idDocente},{$push:{cursosAsignados:lcurso}},(err,resp)=>{
+				if (err) {
+					throw err
+				}else{
+					cursosModel.updateOne({_id:lcurso},{$set:{estado:'cerrado'}},(err,resp)=>{})
+				}
+			})
+		}
+	})
+		
 }
 const actualizar=(datos)=>{
 	usuariosModel.updateOne({identidad:datos.id},{$set:{nombre:datos.nombre}},(err,resp)=>{})
 	usuariosModel.updateOne({identidad:datos.id},{$set:{correo:datos.correo}},(err,resp)=>{})
 	usuariosModel.updateOne({identidad:datos.id},{$set:{telefono:datos.telefono}},(err,resp)=>{})
-	usuariosModel.updateOne({identidad:datos.id},{$set:{rol:datos.rol}},(err,resp)=>{})
+	usuariosModel.findOne({identidad:datos.id},(err,resp)=>{
+		if (err) {
+			throw (err)
+		}else{
+			if (resp.rol != datos.rol) {
+				usuariosModel.updateOne({identidad:datos.id},{$set:{rol:datos.rol}},(err,resp)=>{
+					if (err) {
+						throw (err)
+					}else{
+						if (datos.rol == "docente") {
+							console.log(datos.rol)
+							
+							usuariosModel.updateOne({identidad:datos.id},{$set:{cursosRegistrados:[]}},(err,resp)=>{
+								if (err) {
+									throw(err)
+								}else{
+									console.log(resp)
+									usuariosModel.updateOne({identidad:datos.id},{$rename:{'cursosRegistrados':"cursosAsignados"}},(err,resp)=>{
+										if (err) {
+											throw (err)
+										}else{
+											console.log(resp)
+										}
+									})
+								}
+							})
+						}
+					}
+				})
+			}
+		}
+	})
 }
 const eliminar=(usu,cur)=>{
 	usuariosModel.findOne({identidad:usu},(err,resp)=>{

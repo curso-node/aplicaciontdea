@@ -1,3 +1,4 @@
+
 <li class="col-md-3">
           <div class="informacionCurso">
           <figcaption>
@@ -5,12 +6,11 @@
                   <img src="/img/programas/{{this.categoria}}.jpg">
               </figure>
             </figcaption>
-            
             <div class="datosdelCurso">
               <h3>{{this.nombre}}</h3>
               <p>Costo: <span>${{this.costo}}</span></p>
               <p> Modalidad: <span>{{this.modalidad}}</span></p>
-              <p>Duración : <span>{{this.duracion}}</span></p>
+              <p>Duración : <span>{{this.duracion}}</span></p><br><br><br>
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target='#{{this.id}}'>Mas información</button>
               <div class="modal fade" id='{{this.id}}' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
@@ -31,10 +31,9 @@
                             </div>
                           </div>
                         <div class="modal-footer">
-                            <form  name="{{this.id}}" action="/cancelarCurso" method="POST">
-                            <input type="hidden" name="cancelar_idCurso" value="{{this.id}}">
-                            <input type="hidden" name="cancelar_identidad" value="{{@root.datos.identidad}}">
-                            <button class="btn-primary btn-cancelar" type="submit">Cancelar Curso</button>
+                            <form  name="{{this.id}}" action="/misEstudiantes" method="POST">
+                              <input type="hidden" name="idCurso" value="{{this.id}}">
+                              <button class="btn-primary btn-primary" type="submit">Estudiantes</button>
                             </form>
                         </div>
                         </div>
@@ -42,4 +41,4 @@
                     </div>
             </div>
         </div>
-      </li>  
+      </li> 

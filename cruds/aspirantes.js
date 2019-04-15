@@ -14,8 +14,8 @@ function mostrarCursoInscritos (persona) {
         if (err) {
             throw (err)
         }else{
-            respuesta = resp
-            listadoIdCurso = respuesta.cursosRegistrados
+            respu = resp
+            listadoIdCurso = respu.cursosRegistrados
             listadoIdCurso.map( (value) => {
             cursosModel.findOne({_id:value},(err,resp)=>{
                 if (err) {

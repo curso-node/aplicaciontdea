@@ -31,6 +31,7 @@ const crearCursoSchema = new Schema({
 		type:Array,
 		default:''
 	}
+	
 });
 
 cursos = mongoose.model('cursos', crearCursoSchema)

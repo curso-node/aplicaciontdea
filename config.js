@@ -10,6 +10,7 @@ const MemoryStore = require('memorystore')(expressSession)
 // const listadoDeCursos = require('./dataBase/lista-de-cursos');
 const fs= require('fs');
 require('./helpers');
+const crudsDocente = require('./cruds/docente')
 const crudsAspirante = require('./cruds/aspirantes');
 const crudCoordinador = require('./cruds/coordinador');
 // const listadoDeUsuarios = require('./dataBase/usuariosRegistrados');
@@ -142,7 +143,17 @@ app.get('/dashboard', (req,res) => {
 				success: req.session.succes, 
 				'datos': req.session.datosPersona,
 			});
-		} else {
+		} else if (req.session.succes && req.session.datosPersona.rol === 'docente') {
+
+			crudsDocente.cursosAsignados(req.session.datosPersona.identidad)
+			setTimeout(function() {
+				res.render('dashboardD', {
+					success: req.session.succes, 
+					'datos': req.session.datosPersona,
+					'cursos':cursosAs
+				});
+			}, 1000);
+		}else{
 			res.redirect('ingresar');
 		}
 	}	
@@ -245,16 +256,18 @@ app.post('/dashboard/inscritos',(req,res)=>{
 				'datos': req.session.datosPersona,
 				'inscritos': informacion.lista,
 				'totalInscritos': informacion.total,
-				'curso': informacion.Idcurso
+				'curso': informacion.Idcurso,
+				'profe':profes
 			})
-		},500);
+		},2000);
 	} else{
 		res.redirect("../ingresar")
 	}
 })
 
 app.post('/dashboard/cerrar',(req,res)=>{
-	crudCoordinador.cerrar(req.body.ID)
+	crudCoordinador.cerrar(req.body.ID,req.body.doc)
+	console.log("identidad doc:"+req.body.doc)
 	if (req.session.succes) {
 		res.render("realizado",{
 			success: req.session.succes, 
@@ -332,6 +345,38 @@ app.post("/actualizar",(req,res)=>{
 		res.redirect("../ingresar")
 	}
 })
+app.post('/misEstudiantes',(req,res)=>{
+	if (req.session.succes) {
+		cursosModel.findOne({_id:req.body.idCurso},(err,resp)=>{
+			if (err) {
+				throw (err)
+			}else{
+				cursoInscritos=resp.personasRegistradas
+				personas = []
+				cursoInscritos.map((value)=>{
+					usuariosModel.findOne({identidad:value},(err,resp)=>{
+						if (err) {
+							throw (err)
+						}else{
+							console.log("ciclo"+resp)
+							personas.push(resp)
+						}
+					})
+				})
+				setTimeout(function() {
+					console.log("final"+personas)
+					res.render("verEstudiantes",{
+						success: req.session.succes, 
+						'datos': req.session.datosPersona,
+						'estudiante':personas
+					})
+				}, 2000);
+			}
+		})
+	}else{
+		res.redirect('../ingresar')
+	}
+})
 
 app.get('/', (req, res) => {
 	cursosModel.find({},(err,respuesta)=>{
@@ -343,10 +388,7 @@ app.get('/', (req, res) => {
 				'datos': req.session.datosPersona,
 				'listadoCursos' : respuesta
 			});
-
 		}
-
-	
 	})
 });
 

@@ -46,9 +46,33 @@
 <tr>
 	<th colspan="2">Total inscritos:	{{totalInscritos}} </th>
 	<td>
-      	<form action="/dashboard/cerrar" method="post">
-           <input type="hidden" name="ID" value="{{curso}}">
-           <input type="submit" class="btn btn-danger" value="Cerrar disponibilidad" ></input>
-      	</form>
+      	<button type="button" class="btn btn-danger" data-toggle="modal" data-target='#cerrar'>Cerrar disponibilidad</button>
+
+      	<div class="modal fade" id='cerrar' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			        <div class="modal-header">
+			          <h5 class="modal-title" id="exampleModalLabel"><b>Asignar docente</b></h5>
+			          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			          </button>
+			        </div>
+			        <form action="/dashboard/cerrar" method="post">
+			        <div class="modal-body">
+			          <select id="doc" name="doc" class="form-control" >
+			          	<option disabled="disabled">Asigne un docente</option>
+			          	 {{#each profe}}
+			          	 	<option value="{{this._id}}">{{this.nombre}}</option>
+			          	 {{/each}}
+			          </select>
+			        </div>
+			    	<div class="modal-footer">
+           					<input type="hidden" name="ID" value="{{curso}}">
+           					<input type="submit" class="btn btn-danger" value="Cerrar disponibilidad" ></input>
+      				</form>
+					</div>                          
+		    	</div>
+			</div>
+		</div>
      </td>
 {{>footer}}

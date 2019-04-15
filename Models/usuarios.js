@@ -29,6 +29,9 @@ const registrarUsuariosSchema = new Schema({
 	cursoActual:{
 		type:String,
 		default:""
+	},
+	cursosAsignados:{
+		type:Array
 	}
 
 })
