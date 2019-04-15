@@ -13,11 +13,14 @@ const crudsAspirante = require('./cruds/aspirantes');
 const crudCoordinador = require('./cruds/coordinador')
 const listadoDeUsuarios = require('./dataBase/usuariosRegistrados')
 
+//Asegurar contrasenas
+const bcrypt = require('bcrypt');
+
 const directorioPublico = path.join(__dirname, '/public');
 app.use(express.static(directorioPublico));
 
 const directorioPartials = path.join(__dirname, '/widgets');
-hbs.registerPartials(directorioPartials);
+hbs.registerParti+als(directorioPartials);
 
 //Permite leer el cuerpo en las respuestas del parametro (req -> peticion)
 app.use(bodyParser.json());
@@ -264,9 +267,7 @@ app.get('*', (req, res) => {
 	res.send('Página no existe');
 });
 
-
-//const PORT = 3000;
-const PUERTO = process.env.PORT || 3000;
-app.listen(PUERTO, function () {
-	console.log(`Servidor iniciado en el puerto ${PUERTO}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, function () {
+	console.log(`Servidor iniciado en el puerto ${PORT}`);
 });
