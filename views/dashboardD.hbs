@@ -1,0 +1,16 @@
+{{>headerD}}
+<div class="container-fluid containerTop">
+<h1>Cursos Asignados</h1>
+<section id="cursosAsignados" class="container-fluid text-center">
+    
+    <ul class="row">
+        {{#each cursos}} 
+            {{> cursosAsignados}}
+        {{else}}
+            <p class="mensajeNoCursos">Aún no tienes cursos Asignados</p>
+        {{/each}}      
+    </ul>
+</section>
+
+</div>
+{{>footer}}

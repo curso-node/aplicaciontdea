@@ -5,6 +5,7 @@
                   <img src="/img/programas/{{this.categoria}}.jpg">
               </figure>
             </figcaption>
+            
             <div class="datosdelCurso">
               <h3>{{this.nombre}}</h3>
               <p>Costo: <span>${{this.costo}}</span></p>
@@ -30,9 +31,9 @@
                             </div>
                           </div>
                         <div class="modal-footer">
-                            <form  name="{{this.id}}" action="/dashboard" method="POST">
-                            <input type="text" name="cancelar_idCurso" value="{{this.id}}">
-                            <input type="text" name="cancelar_identidad" value="{{@root.datos.identidad}}">
+                            <form  name="{{this.id}}" action="/cancelarCurso" method="POST">
+                            <input type="hidden" name="cancelar_idCurso" value="{{this.id}}">
+                            <input type="hidden" name="cancelar_identidad" value="{{@root.datos.identidad}}">
                             <button class="btn-primary btn-cancelar" type="submit">Cancelar Curso</button>
                             </form>
                         </div>

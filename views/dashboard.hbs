@@ -5,16 +5,16 @@
 
     {{#Rol datos.rol value="coordinador"}}
         <p class="mensajeNoCursos">Información del coordinador</p>
-        {{else}}
+    {{else}}
+
         <section id="cursosAbiertos" class="container-fluid text-center">
             <h1>Cursos Inscritos</h1>
             <ul class="row">
-
-            {{#each cursosInscrito}} 
-            {{> cancelarCursos}}
-                {{else}}
-                <p class="mensajeNoCursos">No estás registrado a ningún curso todavía</p>
-            {{/each}}         
+                {{#each cursosInscrito}} 
+                    {{> cancelarCursos}}
+                    {{else}}
+                        <p class="mensajeNoCursos">No estás registrado a ningún curso todavía</p>
+                {{/each}}         
             </ul>
             </section>
     {{/Rol}}

@@ -1,40 +1,41 @@
-{{>header}}<br><br><br><br><br>
-<div class="container">
-  <div class="card">
-    <div class="card-header"><b>Actualizar</b></div>
-    <form action="/actualizar" method="post">  
-      <div class="card-body">
-      	<div class="form-group">
-              <b><label>Nombre</label></b>
-              <input type="text" name="nombre" value="{{informacion.nombre}}">
+{{>header}}
+<div class="container-fluid containerTop ">
+  <div class="container">
+    <div class="card">
+      <div class="card-header"><b>Actualizar</b></div>
+      <form action="/actualizar" method="post">  
+        <div class="card-body">
+        	<div class="form-group">
+                <b><label>Nombre</label></b>
+                <input type="text" name="nombre" value="{{informacion.nombre}}">
+              </div>
+              
+              <div class="form-group">
+                <b><label>Correo</label></b>
+                <input type="text" name="correo" value="{{informacion.correo}}">
+              </div>
+              <div class="form-group">
+                <b><label>Telefono</label></b>
+                <input type="text" name="telefono" value="{{informacion.telefono}}">
+              </div>
+              <div class="form-group">                                
+                <b><label>Rol</label></b>
+                <select name="rol" >
+                  <option value="coordinador">Coordinador</option>
+                  <option value="aspirante">Aspirante</option>
+                  <option value="docente">Docente</option>
+                </select>
+              </div>
+              <div class="alert alert-warning" role="alert">
+                ¡Si no vas a cambiar el rol de este usuario recuerda ponerlo como estaba! ;)
             </div>
-            <div class="form-group">
-              <b><label>Identidad</label></b>
-              <input type="text" name="identidad" value="{{informacion.identidad}}">
-            </div>
-            <div class="form-group">
-              <b><label>Correo</label></b>
-              <input type="text" name="correo" value="{{informacion.correo}}">
-            </div>
-            <div class="form-group">
-              <b><label>Telefono</label></b>
-              <input type="text" name="telefono" value="{{informacion.telefono}}">
-            </div>
-            <div class="form-group">                                
-              <b><label>Rol</label></b>
-              <select name="rol" >
-                <option value="coordinador">coordinador</option>
-                <option value="usuario">usuario</option>
-                <option value="docente">docente</option>
-              </select>
-            </div> 
-      </div>
-      <div class="card-footer">
-        <input type="hidden" name="id" value="{{informacion.identidad}}">
-        <input type="submit" name="" class="btn btn-success" value="Enviar">
-      </div>
-    </form>
+        </div>
+        <div class="card-footer">
+          <input type="hidden" name="id" value="{{informacion.identidad}}">
+          <input type="submit" name="" class="btn btn-success" value="Enviar">
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-
 {{>footer}}

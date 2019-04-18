@@ -1,40 +1,70 @@
-const listadoDeCursos = require('../dataBase/lista-de-cursos');
+// const listadoDeCursos = require('../dataBase/lista-de-cursos');
 const fs= require('fs');
-let listado = require('../dataBase/usuariosRegistrados.json');
+// let listado = require('../dataBase/usuariosRegistrados.json');
 
 let respuesta = undefined;
 
-function mostrarCursoInscritos (reqCurso, reqDatos) {
-    reqCurso = [];
-    let listadoIdCurso = reqDatos;
-    listadoIdCurso.map( (value) => {
-        listadoDeCursos.find( curso => {
-            if(value == curso.id) {
-                reqCurso.push(curso);
-            }
-        })
-    });
+//Models
+const usuariosModel = require('../Models/usuarios')
+const cursosModel = require('../Models/cursos')
 
+function mostrarCursoInscritos (persona) {
+    reqCurso = [];
+    usuariosModel.findOne({identidad:persona},(err,resp)=>{
+        if (err) {
+            throw (err)
+        }else{
+            respu = resp
+            listadoIdCurso = respu.cursosRegistrados
+            listadoIdCurso.map( (value) => {
+            cursosModel.findOne({_id:value},(err,resp)=>{
+                if (err) {
+                    throw err
+                }else{
+                    reqCurso.push(resp)
+                }
+            })
+        });
+        }
+    })
     return reqCurso;
 }
 
-function eliminarCurso (idCurso, IdAspirante) {
-    let listaCursos = [];
-    listado.find( usuario => {
-            if(usuario.identidad === IdAspirante){
-                usuario.cursosRegistrados.filter( id => {
-                    if(id != idCurso){
-                        listaCursos.push(id);
+const eliminarCurso=(cur,usu)=>{
+    usuariosModel.findOne({identidad:usu},(err,resp)=>{
+        if (err) {
+            throw (err)
+        }else{
+            dataUs = resp.cursosRegistrados
+            cursosModel.findOne({_id:cur},(err,resp)=>{
+                if (err) {
+                    throw (err)
+                }else{
+                    dataCur = resp.personasRegistradas
+                }
+
+                if (!dataUs ) {
+                    console.log("Uno de los datos es invalido. ¡verifique!")
+                }else{
+                    let personasNoEliminadas= []
+                    for (var i = 0; i < dataCur.length; i++) {
+                        if(dataCur[i]!=usu){
+                            personasNoEliminadas.push(dataCur[i])   
+                        }
                     }
-                })
-            }
-    }) 
-    
-    listado.find( (usuario) => {
-        if(usuario.identidad === IdAspirante) {
-            usuario.cursosRegistrados = listaCursos;
-            guardar(); 
-        }   
+                    cursosModel.updateOne({_id:cur},{$set:{personasRegistradas:personasNoEliminadas}},(err,respuesta)=>{})  
+                        
+                    cursosNoEliminados = []
+                    for (var i = 0; i < dataUs.length; i++) {
+                        if(dataUs[i]!=cur){
+                            cursosNoEliminados.push(dataUs[i])      
+                        }
+                    }
+                    usuariosModel.updateOne({identidad:usu},{$set:{cursosRegistrados:cursosNoEliminados}},(err,respuesta)=>{})
+                }
+            })
+            
+        }
     })
     respuesta = {
         estado: 'success',
@@ -45,56 +75,55 @@ function eliminarCurso (idCurso, IdAspirante) {
     return respuesta;
 }
 
-function inscribirseAunCurso (datoCurso, idEstudiante) {
+function inscribirseAunCurso (datoCurso, idEstudiante) 
+{
     let cursoExiste = false;
-
-    listado.find( (persona) => {
-        if(persona.identidad === idEstudiante){
-            persona.cursosRegistrados.find( (value) => {
-                if(value === datoCurso){
+    usuariosModel.findOne({identidad:idEstudiante},(err,respUS)=>
+    {
+        if (err) {
+            throw (err)
+        }else
+        {   resp = respUS
+            cursosRegistrados = resp.cursosRegistrados            
+            cursosRegistrados.find( (value) => {
+                if(value == datoCurso){
                     cursoExiste = true;
                     return cursoExiste;
                 }                
             }); 
-            
-        if(cursoExiste){
-            respuesta = {
-                estado: 'danger',
-                mensaje: 'Ya estás registado al curso',
-                nombre: 'registroMalo',
-              }
-        } else {
-            persona.cursosRegistrados.push(datoCurso);
-            let curso = listadoDeCursos.find(registrado => registrado.id == datoCurso)
-            curso.personasRegistradas.push(idEstudiante)
-            guardar(); 
-            respuesta = {
-                estado: 'success',
-                mensaje: 'Te has registado al curso',
-                nombre: 'registroBueno',
-              }              
-         }
+            if(cursoExiste){
+                respuesta = {
+                    estado: 'danger',
+                    mensaje: 'Ya estás registado al curso',
+                    nombre: 'registroMalo',
+                }
+            } else
+            {
+                usuariosModel.updateOne({identidad:idEstudiante},{$push:{cursosRegistrados:datoCurso}},(err,res)=>{
+                    if (err) {
+                        throw (err)
+                    }else{
+                       return console.log(res) 
+                    }
+                })
+                cursosModel.updateOne({_id:datoCurso},{$push:{personasRegistradas:idEstudiante}},(err,res)=>{
+                    if (err) {
+                        throw (err)
+                    }else{
+                       return console.log(res) 
+                    }
+                })
+                respuesta = {
+                    estado: 'success',
+                    mensaje: 'Te has registado al curso',
+                    nombre: 'registroBueno',
+                }
+            } 
         }
+    
     })
-    registrarEnCurso();   
-    return respuesta;           
+    return respuesta;        
 }
-
-const guardar = () => {
-    let datos = JSON.stringify(listado, null, 2);
-
-    fs.writeFile('./dataBase/usuariosRegistrados.json', datos, (err) =>{
-        if(err) throw err;
-        console.log('Datos almacenados correctamente');
-    })
-}
-const registrarEnCurso=()=>{
-    let datosCur = JSON.stringify(listadoDeCursos, null, 2);
-    fs.writeFile('./dataBase/lista-de-cursos.json',datosCur,(err)=>{
-        if (err)throw err;
-    })
-}
-
 module.exports = {
     mostrarCursoInscritos : mostrarCursoInscritos,
     inscribirseAunCurso : inscribirseAunCurso,
