@@ -1,12 +1,30 @@
-// const listadoDeCursos = require('../dataBase/lista-de-cursos');
-const fs= require('fs');
-// let listado = require('../dataBase/usuariosRegistrados.json');
-
 let respuesta = undefined;
 
-//Models
+//Modelos
 const usuariosModel = require('../Models/usuarios')
 const cursosModel = require('../Models/cursos')
+
+//Registrarse a la plataforma :post/registrarse
+function buscarUsuario(usuario){
+    return usuariosModel.find(usuario).exec();
+}
+
+function guardarUsuario (usuario) {
+    return new Promise ((resolved) => {
+        let datos = new usuariosModel({
+            identidad : usuario.dt,
+            nombre : usuario.nombre,
+            correo : usuario.correo,
+            contrasena : usuario.contrasena,
+            telefono : usuario.tel,
+        })
+        datos.save( (err) => {
+            if(err) { throw err }
+                console.log("datos almacenados correctamente");
+                resolved();
+        })
+    })
+}
 
 function mostrarCursoInscritos (persona) {
     reqCurso = [];
@@ -127,5 +145,7 @@ function inscribirseAunCurso (datoCurso, idEstudiante)
 module.exports = {
     mostrarCursoInscritos : mostrarCursoInscritos,
     inscribirseAunCurso : inscribirseAunCurso,
-    eliminarCurso: eliminarCurso
+    eliminarCurso : eliminarCurso,
+    buscarUsuario : buscarUsuario,
+    guardarUsuario : guardarUsuario
 }

@@ -6,13 +6,12 @@ const bodyParser = require('body-parser');
 const hbs = require('hbs');
 const expressSession = require('express-session');
 const MemoryStore = require('memorystore')(expressSession);
-const fs= require('fs');
 require('./helpers');
 const crudsDocente = require('./cruds/docente')
 const crudsAspirante = require('./cruds/aspirantes');
 const crudCoordinador = require('./cruds/coordinador');
 
-//Models
+//Modelos
 const cursosModel = require('./Models/cursos')
 const usuariosModel=require('./Models/usuarios')
 
@@ -57,37 +56,15 @@ app.get('/registrarse', (req, res) =>{
 	res.render('registrarse');
 });
 
-app.post('/registrarse', (req, res) =>{
-	function buscarUsuario(usuario){
-		let consulta = usuariosModel.find(usuario).exec();
-		return consulta;
-	 }
-
-	function guardarUsuario (usuario) {
-		return new Promise ((resolved) => {
-			let datos = new usuariosModel({
-				identidad : usuario.dt,
-				nombre : usuario.nombre,
-				correo : usuario.correo,
-				contrasena : usuario.contrasena,
-				telefono : usuario.tel,
-			})
-			datos.save( (err) => {
-				if(err) { throw err}
-					console.log("datos almacenados correctamente");
-					resolved();
-			})
+app.post('/registrarse', (req, res) =>{	 
+	crudsAspirante.buscarUsuario({identidad: req.body.dt})
+		.then( (usuario) => {
+			console.log(`usuario ${usuario}`);
+			return usuario;		
 		})
-	}
-	 
-	 let obtenerUsuario = buscarUsuario({identidad: req.body.dt})
-	 obtenerUsuario.then( (usuario) => {
-		 console.log(`usuario ${usuario}`);
-		 return usuario;		
-	 })
-	 .then((usuario) => {
-		 if(usuario.length == 0){
-				guardarUsuario(usuario)
+		.then((usuario) => {
+			if(usuario.length == 0){
+				crudsAspirante.guardarUsuario(usuario)
 				.then( () => {
 					console.log("Mostrar notificacion");	 
 					let notificacion = {
@@ -96,9 +73,9 @@ app.post('/registrarse', (req, res) =>{
 					}
 					res.render("registrarse", {
 						notificacion : notificacion
-					});
-				}) 
-		 } else {
+				});
+			}) 
+		} else {
 			let notificacion = {
 				estado: 'danger',
 				mensaje: 'Ya se encuentra un usuario registrado con el mismo Documento de identidad.'
