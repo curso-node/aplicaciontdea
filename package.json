@@ -5,7 +5,7 @@
   "main": "config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon config.js"
+    "start": "node config.js"
   },
   "author": "Edwiinrtz edwiinrtz@gmail.com",
   "license": "ISC",

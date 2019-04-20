@@ -6,14 +6,12 @@ const bodyParser = require('body-parser');
 const hbs = require('hbs');
 const registrarUsuario = require('./registrarUsuario');
 const expressSession = require('express-session');
-const MemoryStore = require('memorystore')(expressSession)
-// const listadoDeCursos = require('./dataBase/lista-de-cursos');
+const MemoryStore = require('memorystore')(expressSession);
 const fs= require('fs');
 require('./helpers');
 const crudsDocente = require('./cruds/docente')
 const crudsAspirante = require('./cruds/aspirantes');
 const crudCoordinador = require('./cruds/coordinador');
-// const listadoDeUsuarios = require('./dataBase/usuariosRegistrados');
 
 //Models
 const cursosModel = require('./Models/cursos')
@@ -61,11 +59,45 @@ app.get('/registrarse', (req, res) =>{
 });
 
 app.post('/registrarse', (req, res) =>{
-	let datoRegistro = registrarUsuario.crearRegistro(req.body);	
+	usuariosModel.findOne({identidad: req.body.dt}).exec((err, usuario) => {
+		let dato = req.body;
+		let notificacion;
+		if(err) { console.log(err) }
 
-	res.render("registrarse", {
-		notificacion : datoRegistro
-	});
+		if(!usuario){
+			let datos = new usuariosModel({
+        identidad : dato.dt,
+        nombre : dato.nombre,
+        correo : dato.correo,
+        contrasena : dato.contrasena,
+        telefono : dato.tel,
+			})	
+
+			datos.save((err)=>{
+				if (err) { console.log(err) }	
+				console.log("datos guardados");		
+			})	
+
+			notificacion = {
+				estado: 'success',
+				mensaje: 'Te has registrado correctamente'
+			}
+
+			res.render("registrarse", {
+				notificacion : notificacion
+			});
+
+		} else {
+			console.log("datos ya están almacenados", usuario);
+			notificacion = {
+				estado: 'danger',
+				mensaje: 'Ya se encuentra un usuario registrado con  el Documento de identidad'
+			}
+			res.render("registrarse", {
+				notificacion : notificacion
+			});
+		}
+	})
 });
 
 app.get('/ingresar', (req, res) =>{
