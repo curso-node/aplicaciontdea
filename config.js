@@ -4,7 +4,6 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
-const registrarUsuario = require('./registrarUsuario');
 const expressSession = require('express-session');
 const MemoryStore = require('memorystore')(expressSession);
 const fs= require('fs');
@@ -59,45 +58,56 @@ app.get('/registrarse', (req, res) =>{
 });
 
 app.post('/registrarse', (req, res) =>{
-	usuariosModel.findOne({identidad: req.body.dt}).exec((err, usuario) => {
-		let dato = req.body;
-		let notificacion;
-		if(err) { console.log(err) }
+	function buscarUsuario(usuario){
+		let consulta = usuariosModel.find(usuario).exec();
+		return consulta;
+	 }
 
-		if(!usuario){
+	function guardarUsuario (usuario) {
+		return new Promise ((resolved) => {
 			let datos = new usuariosModel({
-        identidad : dato.dt,
-        nombre : dato.nombre,
-        correo : dato.correo,
-        contrasena : dato.contrasena,
-        telefono : dato.tel,
-			})	
-
-			datos.save((err)=>{
-				if (err) { console.log(err) }	
-				console.log("datos guardados");		
-			})	
-
-			notificacion = {
-				estado: 'success',
-				mensaje: 'Te has registrado correctamente'
-			}
-
-			res.render("registrarse", {
-				notificacion : notificacion
-			});
-
-		} else {
-			console.log("datos ya están almacenados", usuario);
-			notificacion = {
+				identidad : usuario.dt,
+				nombre : usuario.nombre,
+				correo : usuario.correo,
+				contrasena : usuario.contrasena,
+				telefono : usuario.tel,
+			})
+			datos.save( (err) => {
+				if(err) { throw err}
+					console.log("datos almacenados correctamente");
+					resolved();
+			})
+		})
+	}
+	 
+	 let obtenerUsuario = buscarUsuario({identidad: req.body.dt})
+	 obtenerUsuario.then( (usuario) => {
+		 console.log(`usuario ${usuario}`);
+		 return usuario;		
+	 })
+	 .then((usuario) => {
+		 if(usuario.length == 0){
+				guardarUsuario(usuario)
+				.then( () => {
+					console.log("Mostrar notificacion");	 
+					let notificacion = {
+						estado: 'success',
+						mensaje: 'Te has registrado correctamente.'
+					}
+					res.render("registrarse", {
+						notificacion : notificacion
+					});
+				}) 
+		 } else {
+			let notificacion = {
 				estado: 'danger',
-				mensaje: 'Ya se encuentra un usuario registrado con  el Documento de identidad'
+				mensaje: 'Ya se encuentra un usuario registrado con el mismo Documento de identidad.'
 			}
 			res.render("registrarse", {
 				notificacion : notificacion
-			});
-		}
-	})
+			});	 
+		 }
+	 })
 });
 
 app.get('/ingresar', (req, res) =>{
