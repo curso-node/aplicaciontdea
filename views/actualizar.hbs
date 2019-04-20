@@ -3,7 +3,7 @@
   <div class="container">
     <div class="card">
       <div class="card-header"><b>Actualizar</b></div>
-      <form action="/actualizar" method="post">  
+      <form action="/actualizar" method="post" enctype="multipart/form-data">  
         <div class="card-body">
         	<div class="form-group">
                 <b><label>Nombre</label></b>
@@ -18,20 +18,40 @@
                 <b><label>Telefono</label></b>
                 <input type="text" name="telefono" value="{{informacion.telefono}}">
               </div>
-              <div class="form-group">                                
-                <b><label>Rol</label></b>
-                <select name="rol" >
-                  <option value="coordinador">Coordinador</option>
-                  <option value="aspirante">Aspirante</option>
-                  <option value="docente">Docente</option>
-                </select>
-              </div>
-              <div class="alert alert-warning" role="alert">
-                ¡Si no vas a cambiar el rol de este usuario recuerda ponerlo como estaba! ;)
-            </div>
+              {{#Rol datos.rol value="coordinador"}}
+                  <div class="form-group">                                
+                    <b><label>Rol</label></b>
+                    <select name="rol" >
+                      <option value="coordinador">Coordinador</option>
+                      <option value="aspirante">Aspirante</option>
+                      <option value="docente">Docente</option>
+                    </select>
+                  </div>
+                  {{#if informacion.identidad value="{{datos.identidad}}"}}
+                    <div class="form-group">
+                      <b><label>Contraseña</label></b>
+                      <input type="password" name="contrasena" value="{{informacion.contrasena}}">
+                    </div>
+                  {{/if}}
+                  <div class="alert alert-warning" role="alert">
+                    ¡Si no vas a cambiar el rol de este usuario recuerda ponerlo como estaba! ;)
+                  </div>
+              {{else}}
+                <div class="form-group">
+                  <b><label>Contraseña</label></b>
+                  <input type="password" name="contrasena" value="{{informacion.contrasena}}">
+                </div>
+                  <div class="alert alert-warning" role="alert">
+                    ¡No olvides tus datos! ;)
+                  </div>
+              {{/Rol}}
+              <div clas="form-group">
+                <input type="file" name="foto" class="form-control">
+              </div>  
         </div>
         <div class="card-footer">
           <input type="hidden" name="id" value="{{informacion.identidad}}">
+          <input type="hidden" name="rolP" value="{{datos.rol}}">
           <input type="submit" name="" class="btn btn-success" value="Enviar">
         </div>
       </form>

@@ -124,8 +124,19 @@ function inscribirseAunCurso (datoCurso, idEstudiante)
     })
     return respuesta;        
 }
+const actualizar=(datos,foto)=>{
+    usuariosModel.updateOne({identidad:datos.id},{$set:{nombre:datos.nombre}},(err,resp)=>{})
+    usuariosModel.updateOne({identidad:datos.id},{$set:{correo:datos.correo}},(err,resp)=>{})
+    usuariosModel.updateOne({identidad:datos.id},{$set:{telefono:datos.telefono}},(err,resp)=>{})
+    usuariosModel.updateOne({identidad:datos.id},{$set:{contrasena:datos.contrasena}},(err,resp)=>{})
+    if (foto) {
+        console.log(foto)
+        usuariosModel.updateOne({identidad:datos.id},{$set:{perfil:foto}},(err,resp)=>{})
+    }
+}
 module.exports = {
     mostrarCursoInscritos : mostrarCursoInscritos,
     inscribirseAunCurso : inscribirseAunCurso,
-    eliminarCurso: eliminarCurso
+    eliminarCurso: eliminarCurso,
+    actualizar:actualizar
 }

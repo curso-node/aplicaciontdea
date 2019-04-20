@@ -26,4 +26,4 @@ hbs.registerHelper('Rol', function (conditional, options) {
     } else {
       return options.inverse(this);
     }
-  });
+});

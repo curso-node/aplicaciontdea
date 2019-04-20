@@ -9,8 +9,13 @@
         <a class="enlacesNav enlaces" href="/dashboard/Cursos">Cursos</a>
     </li>
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle datosUsuario" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{datos.nombre}}</a>
+      
+        <a class="nav-link dropdown-toggle datosUsuario" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{>foto}}{{datos.nombre}}</a>
       <div class="dropdown-menu">
+        <form method="post" action="/dashboard/actualizar">
+          <input type="hidden" name="id" value="{{datos.identidad}}">
+          <input type="submit" name="" class="dropdown-item enlacesNav" value="Actualizar">              
+        </form>
         <a class="dropdown-item enlacesNav" href="/salir">Cerrar sesión</a>
     </div>
   </li>

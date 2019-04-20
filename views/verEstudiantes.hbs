@@ -3,8 +3,13 @@
   <table class="table table-bordered">
   	<thead>
       <tr>
-        <th scope="col">{{estudiante.personas.nombre}}Usuario</th>
-        <th scope="col" colspan="3">Identidad</th>
+        <th scope="col">Usuario</th>
+        <th scope="col">Identidad</th>
+        <th scope="col">
+          <form>
+            <input type="submit" name="" class="btn btn-success" value="Trabajos propuestos">
+          </form>
+        </th>
       </tr>
     </thead>
     {{estudiante.nombre}}
@@ -38,5 +43,32 @@
       </div>
     {{/each}}
   </table>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mkh">Nuevo trabajo</button>
+<br>
+<div class="modal fade" id='mkh' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><b>Nuevo trabajo</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </div> 
+    
+      <div class="modal-body">
+        <form class="form-group">
+          <input type="text" name="titleWK" placeholder="Título" required class="form-control"><br>
+          <textarea cols="5" rows="5" maxlength="300" class="form-control"></textarea><br>
+          <input type="file" name="file" class="form-control"> 
+      </div>
+
+      <div class="modal-footer">
+        <input type="submit" name="" class="btn btn-success" value="Enviar">
+        </form>
+      </div>
+    
+    </div>
+  </div>
 </div>
 {{>footer}}

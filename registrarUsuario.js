@@ -5,7 +5,7 @@ const usuariosModel = require("./Models/usuarios")
 let listado = [];
 let respuesta;
 
-function crearRegistro (datosEstudiante) {
+function crearRegistro (datosEstudiante,foto) {
     let usuarioExiste = false;
     // listar();
 
@@ -14,7 +14,7 @@ function crearRegistro (datosEstudiante) {
         nombre : datosEstudiante.nombre,
         correo : datosEstudiante.correo,
         contrasena : datosEstudiante.contrasena,
-        telefono : datosEstudiante.tel,
+        telefono : datosEstudiante.tel
     })
 
     let registrar=()=>{ //NOTA: al registrarse no se muestran los mensajes de registro o no registro
