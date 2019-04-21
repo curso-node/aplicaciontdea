@@ -64,7 +64,7 @@ app.post('/registrarse', (req, res) =>{
 		})
 		.then((usuario) => {
 			if(usuario.length == 0){
-				crudsAspirante.guardarUsuario(usuario)
+				crudsAspirante.guardarUsuario(req.body)
 				.then( () => {
 					console.log("Mostrar notificacion");	 
 					let notificacion = {
