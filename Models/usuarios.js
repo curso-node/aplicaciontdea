@@ -32,6 +32,9 @@ const registrarUsuariosSchema = new Schema({
 	},
 	cursosAsignados:{
 		type:Array
+	},
+	perfil:{
+		type:Buffer
 	}
 
 })

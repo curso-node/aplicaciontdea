@@ -1,6 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-// const personasRegistradasSchema = new Schema({usuario:{type:Number}})
+const modulo = new Schema({
+	titulo:{
+		type:String
+	},
+	explicacion:{
+		type:String
+	},
+	fechaIni:{
+		type:Date,
+		default:Date.now
+	},
+	fechaExp:{
+		type:Date
+	},
+	archivos:{
+		type:String
+	}
+})
 const crearCursoSchema = new Schema({
 	nombre:{
 		type:String, 
@@ -30,8 +47,10 @@ const crearCursoSchema = new Schema({
 	personasRegistradas:{
 		type:Array,
 		default:''
-	}
-	
+	},
+	trabajos:{
+		type:Array
+	}	
 });
 
 cursos = mongoose.model('cursos', crearCursoSchema)

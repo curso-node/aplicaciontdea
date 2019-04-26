@@ -3,8 +3,13 @@
   <table class="table table-bordered">
   	<thead>
       <tr>
-        <th scope="col">{{estudiante.personas.nombre}}Usuario</th>
-        <th scope="col" colspan="3">Identidad</th>
+        <th scope="col">Usuario</th>
+        <th scope="col">Identidad</th>
+        <th scope="col">
+          {{!-- <form>
+            <input type="submit" name="" class="btn btn-success" value="Trabajos propuestos">
+          </form> --}}
+        </th>
       </tr>
     </thead>
     {{estudiante.nombre}}
@@ -38,5 +43,46 @@
       </div>
     {{/each}}
   </table>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mkh">Nuevo trabajo</button>
+<br>
+<div class="modal fade" id='mkh' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><b>Nuevo trabajo</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </div> 
+    
+      <div class="modal-body">
+        <form class="form-group" action="/nuevo" method="post" >
+          <div class="form-control">
+            <input type="text" name="titulo" placeholder="Título" required class="form-control">
+          </div>
+
+          <div class="form-control">
+            <textarea cols="5" name="explicacion" rows="5" maxlength="300" class="form-control"></textarea>
+          </div>
+
+          <div class="form-control">
+            <input type="file" name="archivo" class="form-control"> 
+          </div>
+          <div class="form-control">
+            <label for="dateID">Fecha de entrega</label>
+            <input type="date" id="dateID"name="fechaExp">
+            <label for="horaID">Hora</label>
+            <input type="time" id="horaID" name="horaExp">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="cursoID" value="{{curso}}">
+        <input type="submit" name="" class="btn btn-success" value="Enviar">
+        </form>
+      </div>
+    
+    </div>
+  </div>
 </div>
 {{>footer}}

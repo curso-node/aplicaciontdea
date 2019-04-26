@@ -5,13 +5,15 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
 const expressSession = require('express-session');
-const MemoryStore = require('memorystore')(expressSession);
+
+const multer  = require('multer')
+const MemoryStore = require('memorystore')(expressSession)
+
 require('./helpers');
 const crudsDocente = require('./cruds/docente')
 const crudsAspirante = require('./cruds/aspirantes');
 const crudCoordinador = require('./cruds/coordinador');
-
-//Modelos
+//Modelos 
 const cursosModel = require('./Models/cursos')
 const usuariosModel=require('./Models/usuarios')
 
@@ -29,7 +31,7 @@ mongoose.connect('mongodb+srv://admintdea:admin@tdea-yhdq8.mongodb.net/tdea?retr
 		throw (err)
 	}else{
 		console.log("we're connected")
-	}
+	} 
 });
 //Permite leer el cuerpo en las respuestas del parametro (req -> peticion)
 app.use(bodyParser.json());
@@ -97,10 +99,9 @@ app.get('/ingresar', (req, res) =>{
 app.post('/ingresar', (req, res) =>{
 	
 let ingresar =() =>{ 
-
 	let verificar = require('./validarAccesos');
 	let validarUsuario = verificar.existeUsuario(req.body,baseusuarios);
-	console.log(validarUsuario.usuarioExiste)
+		
 		if(validarUsuario.usuarioExiste){
 			req.session.datosPersona = validarUsuario.datosUsuario;
 			req.session.succes = true;
@@ -116,7 +117,9 @@ let ingresar =() =>{
 			});
 		}
 }
-let baseusuarios =  usuariosModel.find({},(err,resp)=>{
+let baseusuarios =  "";
+
+usuariosModel.find({},(err,resp)=>{
 	    if (err) {
 	        throw (err)
 	    }else{
@@ -286,7 +289,6 @@ app.post('/dashboard/inscritos',(req,res)=>{
 
 app.post('/dashboard/cerrar',(req,res)=>{
 	crudCoordinador.cerrar(req.body.ID,req.body.doc)
-	console.log("identidad doc:"+req.body.doc)
 	if (req.session.succes) {
 		res.render("realizado",{
 			success: req.session.succes, 
@@ -323,8 +325,7 @@ app.get('/dashboard/usuarios',(req,res)=>{
 		})
 	}else{
 		res.redirect('../ingresar')
-	}		
-
+	}
 })
 app.post("/dashboard/actualizar",(req,res)=>{
 	if(req.session.succes){
@@ -337,7 +338,8 @@ app.post("/dashboard/actualizar",(req,res)=>{
 					identidad:resp.identidad,
 					correo:resp.correo,
 					telefono:resp.telefono,
-					rol:resp.rol
+					rol:resp.rol,
+					contrasena:resp.contrasena
 				}
 				res.render("actualizar",{
 					success: req.session.succes, 
@@ -352,9 +354,21 @@ app.post("/dashboard/actualizar",(req,res)=>{
 	}
 })
 
-
-app.post("/actualizar",(req,res)=>{
-	crudCoordinador.actualizar(req.body)
+const upload = multer({})
+app.post("/actualizar",upload.single('foto'),(req,res)=>{
+	if (req.body.rolP == "coordinador") {
+		if (!req.file) {
+			crudCoordinador.actualizar(req.body)
+		}else{
+			crudCoordinador.actualizar(req.body,req.file.buffer)
+		}
+	}else{
+		if (!req.file) {
+			crudsAspirante.actualizar(req.body)
+		}else{
+			crudsAspirante.actualizar(req.body,req.file.buffer)
+		}
+	}
 	if (req.session.succes) {
 		res.render("realizado",{
 			success: req.session.succes, 
@@ -377,23 +391,35 @@ app.post('/misEstudiantes',(req,res)=>{
 						if (err) {
 							throw (err)
 						}else{
-							console.log("ciclo"+resp)
 							personas.push(resp)
 						}
 					})
 				})
 				setTimeout(function() {
-					console.log("final"+personas)
 					res.render("verEstudiantes",{
 						success: req.session.succes, 
 						'datos': req.session.datosPersona,
-						'estudiante':personas
+						'estudiante':personas,
+						'curso':req.body.idCurso
 					})
 				}, 2000);
 			}
 		})
 	}else{
 		res.redirect('../ingresar')
+	}
+})
+app.post("/nuevo",(req,res)=>{
+	if (req.session.succes) {
+		crudsDocente.nuevoTrabajo(req.body)
+		console.log(req.body)
+		res.render('dashboardD',{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona
+		})
+
+	}else{
+		res.redirect("../ingresar")
 	}
 })
 

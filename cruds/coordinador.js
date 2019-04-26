@@ -1,7 +1,3 @@
-// const fs = require('fs');
-// cursos = require('../dataBase/lista-de-cursos');
-// listaUsu = require('../dataBase/usuariosRegistrados')
-
 //Models
 const cursosModel = require('../Models/cursos')
 const usuariosModel = require('../Models/usuarios')
@@ -89,7 +85,7 @@ const cerrar=(lcurso,idDocente)=>{
 	})
 		
 }
-const actualizar=(datos)=>{
+const actualizar=(datos,foto)=>{
 	usuariosModel.updateOne({identidad:datos.id},{$set:{nombre:datos.nombre}},(err,resp)=>{})
 	usuariosModel.updateOne({identidad:datos.id},{$set:{correo:datos.correo}},(err,resp)=>{})
 	usuariosModel.updateOne({identidad:datos.id},{$set:{telefono:datos.telefono}},(err,resp)=>{})
@@ -125,6 +121,10 @@ const actualizar=(datos)=>{
 			}
 		}
 	})
+	if (foto) {
+        console.log(foto)
+        usuariosModel.updateOne({identidad:datos.id},{$set:{perfil:foto}},(err,resp)=>{})
+    }
 }
 const eliminar=(usu,cur)=>{
 	usuariosModel.findOne({identidad:usu},(err,resp)=>{
