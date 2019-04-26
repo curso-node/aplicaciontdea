@@ -14,8 +14,6 @@ require('./helpers');
 const crudsDocente = require('./cruds/docente')
 const crudsAspirante = require('./cruds/aspirantes');
 const crudCoordinador = require('./cruds/coordinador');
-// const listadoDeUsuarios = require('./dataBase/usuariosRegistrados');
-
 //Models
 const cursosModel = require('./Models/cursos')
 const usuariosModel=require('./Models/usuarios')
@@ -379,13 +377,27 @@ app.post('/misEstudiantes',(req,res)=>{
 					res.render("verEstudiantes",{
 						success: req.session.succes, 
 						'datos': req.session.datosPersona,
-						'estudiante':personas
+						'estudiante':personas,
+						'curso':req.body.idCurso
 					})
 				}, 2000);
 			}
 		})
 	}else{
 		res.redirect('../ingresar')
+	}
+})
+app.post("/nuevo",(req,res)=>{
+	if (req.session.succes) {
+		crudsDocente.nuevoTrabajo(req.body)
+		console.log(req.body)
+		res.render('dashboardD',{
+			success: req.session.succes, 
+			'datos': req.session.datosPersona
+		})
+
+	}else{
+		res.redirect("../ingresar")
 	}
 })
 

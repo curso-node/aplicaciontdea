@@ -6,9 +6,9 @@
         <th scope="col">Usuario</th>
         <th scope="col">Identidad</th>
         <th scope="col">
-          <form>
+          {{!-- <form>
             <input type="submit" name="" class="btn btn-success" value="Trabajos propuestos">
-          </form>
+          </form> --}}
         </th>
       </tr>
     </thead>
@@ -57,13 +57,27 @@
       </div> 
     
       <div class="modal-body">
-        <form class="form-group">
-          <input type="text" name="titleWK" placeholder="Título" required class="form-control"><br>
-          <textarea cols="5" rows="5" maxlength="300" class="form-control"></textarea><br>
-          <input type="file" name="file" class="form-control"> 
-      </div>
+        <form class="form-group" action="/nuevo" method="post" >
+          <div class="form-control">
+            <input type="text" name="titulo" placeholder="Título" required class="form-control">
+          </div>
 
+          <div class="form-control">
+            <textarea cols="5" name="explicacion" rows="5" maxlength="300" class="form-control"></textarea>
+          </div>
+
+          <div class="form-control">
+            <input type="file" name="archivo" class="form-control"> 
+          </div>
+          <div class="form-control">
+            <label for="dateID">Fecha de entrega</label>
+            <input type="date" id="dateID"name="fechaExp">
+            <label for="horaID">Hora</label>
+            <input type="time" id="horaID" name="horaExp">
+          </div>
+      </div>
       <div class="modal-footer">
+        <input type="hidden" name="cursoID" value="{{curso}}">
         <input type="submit" name="" class="btn btn-success" value="Enviar">
         </form>
       </div>
