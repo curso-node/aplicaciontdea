@@ -417,12 +417,10 @@ app.post("/nuevo",(req,res)=>{
 			success: req.session.succes, 
 			'datos': req.session.datosPersona
 		})
-
 	}else{
 		res.redirect("../ingresar")
 	}
 })
-
 app.get('/', (req, res) => {
 	cursosModel.find({},(err,respuesta)=>{
 		if (err) {
